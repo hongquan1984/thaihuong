@@ -1,11 +1,12 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 interface SlideItem {
   image: string;
   title: string;
   subtitle: string;
   tag: string;
+  buyLink?: string; // Thêm trường link mua hàng
 }
 
 interface FeatureSliderProps {
@@ -15,19 +16,13 @@ interface FeatureSliderProps {
 const FeatureSlider: React.FC<FeatureSliderProps> = ({ data }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   
-  // Lấy danh sách slides từ data hoặc dùng mặc định nếu chưa có
   const slides: SlideItem[] = data?.home_slides ? JSON.parse(data.home_slides) : [
     {
       image: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&q=80&w=1200',
       title: 'BỘ ĐÔI BẢO VỆ DA - NGĂN LÃO HÓA',
       subtitle: '[THÁI HƯƠNG COSMETIC + COLAGEN SHAMPOO]',
-      tag: 'THÁI HƯƠNG COSMETIC SUN'
-    },
-    {
-      image: 'https://images.unsplash.com/photo-1501854140801-50d01698950b?auto=format&fit=crop&q=80&w=1200',
-      title: 'TINH CHẤT PHỤC HỒI CHUYÊN SÂU',
-      subtitle: 'Cấp ẩm tức thì, làm dịu làn da nhạy cảm',
-      tag: 'RECOVERY SERUM'
+      tag: 'THÁI HƯƠNG COSMETIC SUN',
+      buyLink: '#'
     }
   ];
 
@@ -35,11 +30,18 @@ const FeatureSlider: React.FC<FeatureSliderProps> = ({ data }) => {
 
   const currentSlide = slides[activeIndex] || slides[0];
 
+  const handleBuyNow = () => {
+    if (currentSlide.buyLink && currentSlide.buyLink !== '#') {
+      window.open(currentSlide.buyLink, '_blank', 'noopener,noreferrer');
+    } else {
+      alert("Sản phẩm này hiện đang cập nhật link mua hàng!");
+    }
+  };
+
   return (
     <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start animate-in fade-in duration-700">
       {/* Thumbnails & Main Image Group */}
       <div className="lg:col-span-7 flex flex-col md:flex-row gap-4">
-        {/* Thumbnails (Left side on desktop) */}
         <div className="flex flex-row md:flex-col gap-3 order-2 md:order-1 overflow-x-auto md:overflow-visible pb-2 md:pb-0 scrollbar-hide">
           {slides.map((slide, i) => (
             <button
@@ -50,25 +52,20 @@ const FeatureSlider: React.FC<FeatureSliderProps> = ({ data }) => {
               }`}
             >
               <img src={slide.image} className="w-full h-full object-cover" alt={`Thumb ${i}`} />
-              {activeIndex === i && (
-                <div className="absolute inset-0 bg-orange-500/10 animate-pulse"></div>
-              )}
+              {activeIndex === i && <div className="absolute inset-0 bg-orange-500/10 animate-pulse"></div>}
             </button>
           ))}
         </div>
 
-        {/* Main Image View */}
         <div className="flex-1 relative order-1 md:order-2 group">
           <div className="overflow-hidden rounded-[32px] shadow-2xl bg-gray-100 aspect-square md:aspect-auto md:h-[600px]">
             <img 
               key={activeIndex}
               src={currentSlide.image} 
-              alt={currentSlide.title} 
               className="w-full h-full object-cover animate-in fade-in zoom-in duration-500"
             />
           </div>
           
-          {/* Overlay Tag like in image */}
           <div className="absolute bottom-6 left-6 right-6">
             <div className="bg-white/90 backdrop-blur-md p-6 rounded-2xl border border-white shadow-xl max-w-sm transform transition-transform group-hover:translate-y-[-5px]">
                <h4 className="font-black text-orange-600 text-lg uppercase tracking-tight">{currentSlide.tag}</h4>
@@ -81,7 +78,7 @@ const FeatureSlider: React.FC<FeatureSliderProps> = ({ data }) => {
         </div>
       </div>
 
-      {/* Text Content (Right side) */}
+      {/* Text Content */}
       <div className="lg:col-span-5 flex flex-col justify-center h-full space-y-8 py-6">
         <div>
           <h2 className="text-4xl md:text-5xl font-black text-gray-900 leading-[1.1] tracking-tighter mb-4">
@@ -107,8 +104,11 @@ const FeatureSlider: React.FC<FeatureSliderProps> = ({ data }) => {
         </div>
 
         <div className="flex flex-col gap-4">
-          <button className="w-full bg-orange-500 hover:bg-orange-600 text-white py-5 rounded-2xl font-black text-sm uppercase tracking-[0.2em] shadow-2xl shadow-orange-500/40 transition-all hover:-translate-y-1 active:translate-y-0">
-            THÊM VÀO GIỎ HÀNG
+          <button 
+            onClick={handleBuyNow}
+            className="w-full bg-orange-500 hover:bg-orange-600 text-white py-5 rounded-2xl font-black text-sm uppercase tracking-[0.2em] shadow-2xl shadow-orange-500/40 transition-all hover:-translate-y-1 active:translate-y-0"
+          >
+            MUA HÀNG NGAY
           </button>
           
           <div className="flex gap-4">

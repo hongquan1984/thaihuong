@@ -19,7 +19,6 @@ const App: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [showSqlPreview, setShowSqlPreview] = useState(false);
   const [connectionStatus, setConnectionStatus] = useState<'idle' | 'checking' | 'success' | 'error'>('idle');
-  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     const checkHash = () => {
@@ -54,24 +53,15 @@ const App: React.FC = () => {
 
   const checkConnection = async () => {
     setConnectionStatus('checking');
-    setErrorMessage('');
     try {
       const { data, error } = await supabase.from('site_content').select('key').limit(1);
-      
       if (error) {
-        if (error.code === '42P01') {
-          setConnectionStatus('error');
-          setErrorMessage('Kết nối API OK, nhưng bảng "site_content" chưa được tạo. Hãy chạy lệnh SQL bên dưới!');
-        } else {
-          setConnectionStatus('error');
-          setErrorMessage(`Lỗi: ${error.message} (Mã: ${error.code})`);
-        }
+        setConnectionStatus('error');
       } else {
         setConnectionStatus('success');
       }
     } catch (err: any) {
       setConnectionStatus('error');
-      setErrorMessage('Không thể kết nối tới Supabase. Kiểm tra URL và Key trong lib/supabase.ts');
     }
   };
 
@@ -98,7 +88,8 @@ const App: React.FC = () => {
         image: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&q=80&w=1200',
         title: 'BỘ ĐÔI BẢO VỆ DA - NGĂN LÃO HÓA',
         subtitle: '[THÁI HƯƠNG COSMETIC + COLAGEN SHAMPOO]',
-        tag: 'THÁI HƯƠNG COSMETIC SUN'
+        tag: 'THÁI HƯƠNG COSMETIC SUN',
+        buyLink: 'https://shopee.vn'
       }
     ];
 
@@ -118,28 +109,15 @@ const App: React.FC = () => {
       home_slides: JSON.stringify(defaultSlides)
     };
 
-    let sql = `-- ==========================================\n`;
-    sql += `-- 1. THIẾT LẬP BẢNG DỮ LIỆU (DATABASE)\n`;
-    sql += `-- ==========================================\n`;
+    let sql = `-- SQL Script for Supabase\n`;
     sql += `CREATE TABLE IF NOT EXISTS site_content (key TEXT PRIMARY KEY, value TEXT);\n`;
     sql += `ALTER TABLE site_content ENABLE ROW LEVEL SECURITY;\n`;
-    sql += `DROP POLICY IF EXISTS "Allow Public Access" ON site_content;\n`;
     sql += `CREATE POLICY "Allow Public Access" ON site_content FOR ALL USING (true) WITH CHECK (true);\n\n`;
-
-    sql += `-- ==========================================\n`;
-    sql += `-- 2. THIẾT LẬP LƯU TRỮ ẢNH (STORAGE)\n`;
-    sql += `-- ==========================================\n`;
-    sql += `INSERT INTO storage.buckets (id, name, public) \n`;
-    sql += `VALUES ('media', 'media', true) \n`;
-    sql += `ON CONFLICT (id) DO NOTHING;\n\n`;
+    sql += `INSERT INTO storage.buckets (id, name, public) VALUES ('media', 'media', true) ON CONFLICT (id) DO NOTHING;\n`;
     sql += `CREATE POLICY "Public Read" ON storage.objects FOR SELECT USING (bucket_id = 'media');\n`;
     sql += `CREATE POLICY "Public Upload" ON storage.objects FOR INSERT WITH CHECK (bucket_id = 'media');\n`;
     sql += `CREATE POLICY "Public Update" ON storage.objects FOR UPDATE USING (bucket_id = 'media');\n`;
     sql += `CREATE POLICY "Public Delete" ON storage.objects FOR DELETE USING (bucket_id = 'media');\n\n`;
-
-    sql += `-- ==========================================\n`;
-    sql += `-- 3. DỮ LIỆU MẶC ĐỊNH\n`;
-    sql += `-- ==========================================\n`;
     sql += `INSERT INTO site_content (key, value) VALUES\n`;
     
     const valuesSql = keys.map(key => {

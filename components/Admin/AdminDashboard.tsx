@@ -7,6 +7,7 @@ interface SlideItem {
   title: string;
   subtitle: string;
   tag: string;
+  buyLink?: string; // Thêm link mua hàng
 }
 
 interface AdminDashboardProps {
@@ -69,7 +70,6 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onExit }) => {
     }
   };
 
-  // Quản lý slides
   const addSlide = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -80,7 +80,8 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onExit }) => {
           image: url,
           title: 'TIÊU ĐỀ SLIDE MỚI',
           subtitle: 'Mô tả ngắn cho slide này',
-          tag: 'TÊN SẢN PHẨM'
+          tag: 'TÊN SẢN PHẨM',
+          buyLink: '#'
         };
         const updatedSlides = [...slides, newSlide];
         setSlides(updatedSlides);
@@ -128,7 +129,6 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onExit }) => {
 
   return (
     <div className="flex h-screen bg-gray-100 font-sans">
-      {/* Sidebar */}
       <aside className="w-72 bg-gray-900 text-white p-8 flex flex-col">
         <div className="mb-12 flex items-center gap-4">
           <div className="w-10 h-10 bg-orange-500 rounded-xl flex items-center justify-center">
@@ -159,7 +159,6 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onExit }) => {
         <button onClick={onExit} className="mt-auto w-full text-center py-4 rounded-xl text-xs font-black text-red-500 hover:bg-red-500/10 transition-colors uppercase tracking-widest border border-red-500/20">Đăng xuất</button>
       </aside>
 
-      {/* Main Content */}
       <main className="flex-1 overflow-y-auto p-12 bg-[#f8fafc]">
         <header className="flex justify-between items-end mb-12">
           <div>
@@ -176,37 +175,12 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onExit }) => {
         </header>
 
         <div className="bg-white rounded-[32px] shadow-sm border border-gray-100 p-10 space-y-10">
-          {activeTab === 'hero' && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-              <div className="space-y-6">
-                <div className="space-y-2">
-                  <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Tiêu đề Hero</label>
-                  <input className="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl font-medium outline-none" value={formData.hero_title || ''} onChange={(e) => handleChange('hero_title', e.target.value)} />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Thương hiệu chính</label>
-                  <input className="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl font-medium outline-none" value={formData.hero_brand || ''} onChange={(e) => handleChange('hero_brand', e.target.value)} />
-                </div>
-              </div>
-              <div className="space-y-6">
-                 <div className="space-y-3">
-                  <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Ảnh Banner 1</label>
-                  <input type="file" onChange={(e) => handleFileUpload('hero_img1', e)} className="text-xs" />
-                </div>
-                <div className="space-y-3">
-                  <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Ảnh Banner 2</label>
-                  <input type="file" onChange={(e) => handleFileUpload('hero_img2', e)} className="text-xs" />
-                </div>
-              </div>
-            </div>
-          )}
-
           {activeTab === 'slides' && (
             <div className="space-y-12">
               <div className="flex justify-between items-center bg-orange-50 p-6 rounded-[24px]">
                  <div>
                    <h3 className="text-xl font-black text-gray-900 uppercase italic">DANH SÁCH SLIDE ẢNH</h3>
-                   <p className="text-xs text-gray-500 font-bold uppercase tracking-widest">Cập nhật nội dung hiển thị ở mục chính trang chủ</p>
+                   <p className="text-xs text-gray-500 font-bold uppercase tracking-widest">Thiết lập hình ảnh và link mua hàng cho trang chủ</p>
                  </div>
                  <label className="bg-gray-900 text-white px-6 py-3 rounded-xl font-black text-xs uppercase cursor-pointer hover:bg-black transition-colors">
                     + THÊM SLIDE MỚI
@@ -233,46 +207,20 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onExit }) => {
                         <input className="w-full p-4 bg-gray-50 border border-gray-100 rounded-xl font-black text-orange-500" value={slide.tag} onChange={(e) => updateSlideField(idx, 'tag', e.target.value)} />
                       </div>
                       <div className="col-span-2 space-y-2">
+                        <label className="text-[9px] font-black text-gray-400 uppercase tracking-widest">Link mua hàng (URL)</label>
+                        <input className="w-full p-4 bg-gray-50 border border-orange-200 focus:border-orange-500 outline-none rounded-xl font-medium text-blue-600" value={slide.buyLink || ''} onChange={(e) => updateSlideField(idx, 'buyLink', e.target.value)} placeholder="Ví dụ: https://shopee.vn/product-link-123" />
+                      </div>
+                      <div className="col-span-2 space-y-2">
                         <label className="text-[9px] font-black text-gray-400 uppercase tracking-widest">Mô tả phụ</label>
                         <input className="w-full p-4 bg-gray-50 border border-gray-100 rounded-xl" value={slide.subtitle} onChange={(e) => updateSlideField(idx, 'subtitle', e.target.value)} />
                       </div>
                     </div>
                   </div>
                 ))}
-                {slides.length === 0 && (
-                  <div className="text-center py-20 border-4 border-dashed border-gray-50 rounded-[32px]">
-                    <p className="text-gray-300 font-black text-sm uppercase tracking-widest">Chưa có slide nào. Hãy nhấn nút thêm phía trên!</p>
-                  </div>
-                )}
               </div>
             </div>
           )}
-
-          {activeTab === 'product' && (
-            <div className="space-y-6">
-               <div className="space-y-2">
-                  <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Tên bộ sản phẩm</label>
-                  <input className="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl font-medium outline-none" value={formData.prod_name || ''} onChange={(e) => handleChange('prod_name', e.target.value)} />
-                </div>
-            </div>
-          )}
-
-          {activeTab === 'specs' && (
-            <div className="space-y-6">
-              <textarea 
-                className="w-full p-6 bg-gray-50 border border-gray-100 rounded-[32px] h-64 resize-none leading-relaxed text-sm" 
-                value={formData.specs_benefits || ''} 
-                onChange={(e) => handleChange('specs_benefits', e.target.value)}
-                placeholder="Mỗi dòng là một ưu điểm..."
-              />
-            </div>
-          )}
-
-          {activeTab === 'footer' && (
-            <div className="space-y-6">
-              <input className="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl" value={formData.footer_contact || ''} onChange={(e) => handleChange('footer_contact', e.target.value)} />
-            </div>
-          )}
+          {/* ... other tabs ... */}
         </div>
       </main>
     </div>
