@@ -6,7 +6,9 @@ interface SlideItem {
   title: string;
   subtitle: string;
   tag: string;
-  buyLink?: string; // Thêm trường link mua hàng
+  buyLink?: string;
+  price?: string;
+  oldPrice?: string;
 }
 
 interface FeatureSliderProps {
@@ -22,7 +24,9 @@ const FeatureSlider: React.FC<FeatureSliderProps> = ({ data }) => {
       title: 'BỘ ĐÔI BẢO VỆ DA - NGĂN LÃO HÓA',
       subtitle: '[THÁI HƯƠNG COSMETIC + COLAGEN SHAMPOO]',
       tag: 'THÁI HƯƠNG COSMETIC SUN',
-      buyLink: '#'
+      buyLink: '#',
+      price: '899.000đ',
+      oldPrice: '1.070.000đ'
     }
   ];
 
@@ -31,7 +35,7 @@ const FeatureSlider: React.FC<FeatureSliderProps> = ({ data }) => {
   const currentSlide = slides[activeIndex] || slides[0];
 
   const handleBuyNow = () => {
-    if (currentSlide.buyLink && currentSlide.buyLink !== '#') {
+    if (currentSlide.buyLink && currentSlide.buyLink !== '#' && currentSlide.buyLink.trim() !== '') {
       window.open(currentSlide.buyLink, '_blank', 'noopener,noreferrer');
     } else {
       alert("Sản phẩm này hiện đang cập nhật link mua hàng!");
@@ -81,7 +85,7 @@ const FeatureSlider: React.FC<FeatureSliderProps> = ({ data }) => {
       {/* Text Content */}
       <div className="lg:col-span-5 flex flex-col justify-center h-full space-y-8 py-6">
         <div>
-          <h2 className="text-4xl md:text-5xl font-black text-gray-900 leading-[1.1] tracking-tighter mb-4">
+          <h2 className="text-4xl md:text-5xl font-black text-gray-900 leading-[1.1] tracking-tighter mb-4 uppercase">
             {currentSlide.title}
           </h2>
           <p className="text-orange-500 font-black text-sm uppercase tracking-widest">
@@ -98,8 +102,11 @@ const FeatureSlider: React.FC<FeatureSliderProps> = ({ data }) => {
           </div>
 
           <div className="flex items-baseline gap-4">
-            <span className="text-5xl font-black text-gray-900 tracking-tighter">899.000đ</span>
-            <span className="bg-orange-100 text-orange-600 text-xs font-black px-3 py-1.5 rounded-lg uppercase">-20% OFF</span>
+            <span className="text-5xl font-black text-gray-900 tracking-tighter">{currentSlide.price || '899.000đ'}</span>
+            {currentSlide.oldPrice && (
+              <span className="text-xl text-gray-300 line-through font-bold">{currentSlide.oldPrice}</span>
+            )}
+            <span className="bg-orange-100 text-orange-600 text-xs font-black px-3 py-1.5 rounded-lg uppercase">GIÁ TỐT</span>
           </div>
         </div>
 
@@ -112,13 +119,13 @@ const FeatureSlider: React.FC<FeatureSliderProps> = ({ data }) => {
           </button>
           
           <div className="flex gap-4">
-            <button className="flex-1 py-4 border-2 border-gray-100 rounded-2xl flex justify-center items-center hover:bg-gray-50 transition-colors">
+            <div className="flex-1 py-4 border-2 border-gray-100 rounded-2xl flex justify-center items-center">
               <div className="flex items-center border-2 border-gray-200 rounded-xl px-4 py-1">
-                <span className="text-lg font-bold px-3 opacity-30 cursor-pointer">-</span>
+                <span className="text-lg font-bold px-3 opacity-30 cursor-not-allowed">-</span>
                 <span className="text-lg font-black px-4">1</span>
-                <span className="text-lg font-bold px-3 opacity-30 cursor-pointer">+</span>
+                <span className="text-lg font-bold px-3 opacity-30 cursor-not-allowed">+</span>
               </div>
-            </button>
+            </div>
             <button className="p-4 border-2 border-gray-100 rounded-2xl text-gray-300 hover:text-red-500 hover:border-red-100 transition-all">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
