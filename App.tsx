@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
-import ProductMain from './components/ProductMain';
+import FeatureSlider from './components/FeatureSlider';
 import RelatedProducts from './components/RelatedProducts';
 import ProductInfoSection from './components/ProductInfoSection';
 import Footer from './components/Footer';
@@ -90,9 +90,18 @@ const App: React.FC = () => {
   const generateSqlScript = () => {
     const keys = [
       'hero_title', 'hero_brand', 'hero_brand2', 'hero_price', 'hero_old_price', 
-      'hero_img1', 'hero_img2', 'prod_name', 'specs_img', 'specs_benefits', 'footer_info', 'footer_contact'
+      'hero_img1', 'hero_img2', 'prod_name', 'specs_img', 'specs_benefits', 'footer_info', 'footer_contact', 'home_slides'
     ];
     
+    const defaultSlides = [
+      {
+        image: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&q=80&w=1200',
+        title: 'BỘ ĐÔI BẢO VỆ DA - NGĂN LÃO HÓA',
+        subtitle: '[THÁI HƯƠNG COSMETIC + COLAGEN SHAMPOO]',
+        tag: 'THÁI HƯƠNG COSMETIC SUN'
+      }
+    ];
+
     const defaultValues: any = {
       hero_title: 'BẢO VỆ DA - NGĂN LÃO HÓA',
       hero_brand: 'WIICARE',
@@ -105,20 +114,32 @@ const App: React.FC = () => {
       specs_img: 'https://images.unsplash.com/photo-1556229010-6c3f2c9ca5f8?auto=format&fit=crop&q=80&w=600',
       specs_benefits: 'Sửa giúp da căng bóng, mềm mịn tức thì\nNgăn ngừa lão hóa da\nCeramide làm trắng da',
       footer_info: 'Vẻ đẹp bền vững bắt nguồn từ sự thấu hiểu.',
-      footer_contact: 'Hotline: 090.xxx.xxxx | Địa chỉ: Hà Nội'
+      footer_contact: 'Hotline: 090.xxx.xxxx | Địa chỉ: Hà Nội',
+      home_slides: JSON.stringify(defaultSlides)
     };
 
-    let sql = `-- HƯỚNG DẪN QUAN TRỌNG: Hãy copy và chạy đoạn này để cấp quyền LƯU dữ liệu\n\n`;
-    sql += `-- 1. Tạo bảng\n`;
-    sql += `CREATE TABLE IF NOT EXISTS site_content (key TEXT PRIMARY KEY, value TEXT);\n\n`;
-    sql += `-- 2. Bật bảo mật bảng\n`;
-    sql += `ALTER TABLE site_content ENABLE ROW LEVEL SECURITY;\n\n`;
-    sql += `-- 3. Xóa các chính sách cũ nếu có để tránh xung đột\n`;
+    let sql = `-- ==========================================\n`;
+    sql += `-- 1. THIẾT LẬP BẢNG DỮ LIỆU (DATABASE)\n`;
+    sql += `-- ==========================================\n`;
+    sql += `CREATE TABLE IF NOT EXISTS site_content (key TEXT PRIMARY KEY, value TEXT);\n`;
+    sql += `ALTER TABLE site_content ENABLE ROW LEVEL SECURITY;\n`;
     sql += `DROP POLICY IF EXISTS "Allow Public Access" ON site_content;\n`;
-    sql += `DROP POLICY IF EXISTS "Allow Public Read" ON site_content;\n\n`;
-    sql += `-- 4. Tạo chính sách cho phép ĐỌC và GHI dữ liệu (RẤT QUAN TRỌNG ĐỂ LƯU ĐƯỢC)\n`;
     sql += `CREATE POLICY "Allow Public Access" ON site_content FOR ALL USING (true) WITH CHECK (true);\n\n`;
-    sql += `-- 5. Chèn/Cập nhật dữ liệu mặc định\n`;
+
+    sql += `-- ==========================================\n`;
+    sql += `-- 2. THIẾT LẬP LƯU TRỮ ẢNH (STORAGE)\n`;
+    sql += `-- ==========================================\n`;
+    sql += `INSERT INTO storage.buckets (id, name, public) \n`;
+    sql += `VALUES ('media', 'media', true) \n`;
+    sql += `ON CONFLICT (id) DO NOTHING;\n\n`;
+    sql += `CREATE POLICY "Public Read" ON storage.objects FOR SELECT USING (bucket_id = 'media');\n`;
+    sql += `CREATE POLICY "Public Upload" ON storage.objects FOR INSERT WITH CHECK (bucket_id = 'media');\n`;
+    sql += `CREATE POLICY "Public Update" ON storage.objects FOR UPDATE USING (bucket_id = 'media');\n`;
+    sql += `CREATE POLICY "Public Delete" ON storage.objects FOR DELETE USING (bucket_id = 'media');\n\n`;
+
+    sql += `-- ==========================================\n`;
+    sql += `-- 3. DỮ LIỆU MẶC ĐỊNH\n`;
+    sql += `-- ==========================================\n`;
     sql += `INSERT INTO site_content (key, value) VALUES\n`;
     
     const valuesSql = keys.map(key => {
@@ -143,109 +164,42 @@ const App: React.FC = () => {
       <main>
         <Hero data={content} />
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-20">
-          <ProductMain data={content} />
+          <FeatureSlider data={content} />
           <RelatedProducts />
           <ProductInfoSection data={content} />
         </div>
       </main>
       
-      {/* Footer SQL Tool */}
       <div className="bg-gray-950 text-white py-16 border-t-8 border-orange-600">
         <div className="max-w-5xl mx-auto px-6">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-10">
             <div>
-              <h3 className="text-3xl font-black text-white mb-2 italic">SUPABASE SQL SETUP</h3>
-              <p className="text-gray-400 text-sm">Hãy chạy mã SQL này để kích hoạt quyền LƯU (Write) dữ liệu.</p>
+              <h3 className="text-3xl font-black text-white mb-2 italic">SUPABASE FULL SETUP</h3>
+              <p className="text-gray-400 text-sm">Chạy mã này để kích hoạt cả LƯU DỮ LIỆU và TẢI ẢNH.</p>
             </div>
             <div className="flex gap-3">
-              <button 
-                onClick={checkConnection}
-                disabled={connectionStatus === 'checking'}
-                className={`px-6 py-4 rounded-xl font-black text-xs uppercase tracking-widest transition-all shadow-xl flex items-center gap-2 ${
-                  connectionStatus === 'success' ? 'bg-green-500 text-white' : 
-                  connectionStatus === 'error' ? 'bg-red-500 text-white' : 
-                  'bg-gray-800 text-gray-300 hover:bg-gray-700'
-                }`}
-              >
-                {connectionStatus === 'checking' ? 'Đang kiểm tra...' : 'Kiểm tra kết nối'}
-                {connectionStatus === 'success' && ' ✓'}
-                {connectionStatus === 'error' && ' ✕'}
-              </button>
-              <button 
-                onClick={() => setShowSqlPreview(!showSqlPreview)}
-                className="bg-white text-black px-8 py-4 rounded-xl font-black text-xs uppercase tracking-[0.2em] hover:bg-orange-500 hover:text-white transition-all shadow-xl"
-              >
-                {showSqlPreview ? 'ĐÓNG BẢNG SQL' : 'MỞ HƯỚNG DẪN SETUP'}
-              </button>
+              <button onClick={checkConnection} className="bg-gray-800 text-gray-300 px-6 py-4 rounded-xl font-black text-xs uppercase tracking-widest hover:bg-gray-700 transition-all">Kiểm tra kết nối</button>
+              <button onClick={() => setShowSqlPreview(!showSqlPreview)} className="bg-white text-black px-8 py-4 rounded-xl font-black text-xs uppercase tracking-[0.2em] hover:bg-orange-500 hover:text-white transition-all shadow-xl">MỞ HƯỚNG DẪN SETUP</button>
             </div>
           </div>
-
-          {connectionStatus === 'success' && (
-            <div className="mb-8 p-4 bg-green-500/10 border border-green-500/20 rounded-xl text-green-400 text-sm font-bold flex items-center gap-3 animate-in fade-in zoom-in duration-300">
-              <span className="flex h-3 w-3 relative">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
-              </span>
-              Kết nối OK! Nếu vẫn không lưu được, hãy copy mã SQL bên dưới và chạy lại trong SQL Editor.
-            </div>
-          )}
-
-          {connectionStatus === 'error' && (
-            <div className="mb-8 p-4 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-sm font-bold animate-in fade-in zoom-in duration-300">
-              {errorMessage}
-            </div>
-          )}
-          
           {showSqlPreview && (
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-              <div className="lg:col-span-1 space-y-6">
-                <div className="bg-white/5 p-6 rounded-2xl border border-white/10">
-                  <div className="text-orange-500 font-black text-xl mb-4">BƯỚC 1</div>
-                  <p className="text-sm text-gray-300">Vào <b>SQL Editor</b> trên Supabase.</p>
+            <div className="relative group animate-in fade-in slide-in-from-bottom-4 duration-500">
+              <div className="absolute -inset-1 bg-gradient-to-r from-orange-600 to-pink-600 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
+              <div className="relative bg-black rounded-2xl overflow-hidden border border-white/10">
+                <div className="flex items-center justify-between px-6 py-4 bg-white/5 border-b border-white/10">
+                  <span className="text-[10px] font-black uppercase tracking-widest text-gray-500">PostgreSQL Script (Full Access)</span>
+                  <button onClick={() => { navigator.clipboard.writeText(generateSqlScript()); alert("Đã copy SQL script thành công!"); }} className="text-[10px] font-bold text-orange-400 hover:text-white transition-colors">COPY TO CLIPBOARD</button>
                 </div>
-                <div className="bg-white/5 p-6 rounded-2xl border border-white/10">
-                  <div className="text-orange-500 font-black text-xl mb-4">BƯỚC 2</div>
-                  <p className="text-sm text-gray-300">Nhấn <b>New Query</b>, dán mã bên cạnh vào.</p>
-                </div>
-                <div className="bg-white/5 p-6 rounded-2xl border border-white/10">
-                  <div className="text-orange-500 font-black text-xl mb-4">BƯỚC 3</div>
-                  <p className="text-sm text-gray-300">Nhấn <b>RUN</b> để hoàn tất cấp quyền GHI.</p>
-                </div>
-              </div>
-              
-              <div className="lg:col-span-2 relative group">
-                <div className="absolute -inset-1 bg-gradient-to-r from-orange-600 to-pink-600 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
-                <div className="relative bg-black rounded-2xl overflow-hidden border border-white/10">
-                  <div className="flex items-center justify-between px-6 py-4 bg-white/5 border-b border-white/10">
-                    <span className="text-[10px] font-black uppercase tracking-widest text-gray-500">PostgreSQL Script (Full Access)</span>
-                    <button 
-                      onClick={() => {
-                        navigator.clipboard.writeText(generateSqlScript());
-                        alert("Đã copy SQL script thành công!");
-                      }}
-                      className="text-[10px] font-bold text-orange-400 hover:text-white transition-colors"
-                    >
-                      COPY TO CLIPBOARD
-                    </button>
-                  </div>
-                  <pre className="p-8 text-[12px] font-mono text-orange-200/80 overflow-auto h-[400px] scrollbar-hide select-all">
-                    {generateSqlScript()}
-                  </pre>
-                </div>
+                <pre className="p-8 text-[12px] font-mono text-orange-200/80 overflow-auto h-[400px] scrollbar-hide">
+                  {generateSqlScript()}
+                </pre>
               </div>
             </div>
           )}
         </div>
       </div>
-
       <Footer />
-      
-      <button 
-        onClick={() => setIsAdminMode(true)}
-        className="fixed bottom-4 left-4 opacity-5 hover:opacity-100 bg-black text-white text-[8px] px-2 py-1 rounded transition-all z-[100]"
-      >
-        DASHBOARD
-      </button>
+      <button onClick={() => setIsAdminMode(true)} className="fixed bottom-4 left-4 opacity-5 hover:opacity-100 bg-black text-white text-[8px] px-2 py-1 rounded transition-all z-[100]">DASHBOARD</button>
     </div>
   );
 };
