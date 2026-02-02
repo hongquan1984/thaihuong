@@ -75,7 +75,7 @@ const App: React.FC = () => {
       <Header />
       <main>
         <Hero data={content} />
-        <div className="max-w-6xl mx-auto px-0 sm:px-6 lg:px-8 py-4 md:py-12 space-y-8 md:space-y-20">
+        <div className="max-w-6xl mx-auto px-6 sm:px-6 lg:px-8 py-4 md:py-12 space-y-12 md:space-y-24">
           <FeatureSlider data={content} />
           <ImageGallery data={content} />
           <Testimonials data={content} />
