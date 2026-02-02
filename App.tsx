@@ -79,46 +79,34 @@ const App: React.FC = () => {
 
   const generateSqlScript = () => {
     const keys = [
-      'hero_title', 'hero_brand', 'hero_brand2', 'hero_price', 'hero_old_price', 
-      'hero_img1', 'hero_img2', 'hero_video', 'prod_name', 'specs_img', 'specs_benefits', 'footer_info', 'footer_contact', 'home_slides'
+      'hero_title', 'hero_title_size', 'hero_brand', 'hero_brand_size', 'hero_brand2', 'hero_brand2_size', 'hero_desc',
+      'hero_price', 'hero_old_price', 'hero_img1', 'hero_video', 'prod_name', 'specs_img', 'specs_benefits', 'footer_info', 'footer_contact', 'home_slides'
     ];
     
-    const defaultSlides = [
-      {
-        image: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&q=80&w=1200',
-        title: 'BỘ ĐÔI BẢO VỆ DA - NGĂN LÃO HÓA',
-        subtitle: '[THÁI HƯƠNG COSMETIC + COLAGEN SHAMPOO]',
-        tag: 'THÁI HƯƠNG COSMETIC SUN',
-        buyLink: 'https://shopee.vn'
-      }
-    ];
-
     const defaultValues: any = {
-      hero_title: 'BẢO VỆ DA - NGĂN LÃO HÓA',
+      hero_title: 'BẢO VỆ DA - NGĂN LÃO HÓA NHÉ CẢ NHÀ',
+      hero_title_size: '12px',
       hero_brand: 'THÁI HƯƠNG COSMETIC',
+      hero_brand_size: '4.5rem',
       hero_brand2: 'COLAGEN SHAMPOO',
+      hero_brand2_size: '3.5rem',
+      hero_desc: 'Giải pháp toàn diện giúp bảo vệ làn da khỏi tác hại của tia UV đồng thời cấp ẩm và ngăn ngừa lão hóa chuyên sâu từ Collagen tươi hữu cơ.',
       hero_price: '899.000đ',
       hero_old_price: '1.070.000đ',
       hero_img1: 'https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&q=80&w=800',
-      hero_img2: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=800',
       hero_video: 'https://player.vimeo.com/external/494252666.sd.mp4?s=72312154670233e466d79a29e7f539951684c30c&profile_id=164&oauth2_token_id=57447761',
       prod_name: 'BỘ ĐÔI BẢO VỆ DA - NGĂN LÃO HÓA',
       specs_img: 'https://images.unsplash.com/photo-1556229010-6c3f2c9ca5f8?auto=format&fit=crop&q=80&w=600',
       specs_benefits: 'Sửa giúp da căng bóng, mềm mịn tức thì\nNgăn ngừa lão hóa da\nCeramide làm trắng da',
       footer_info: 'Vẻ đẹp bền vững bắt nguồn từ sự thấu hiểu.',
       footer_contact: 'Hotline: 090.xxx.xxxx | Địa chỉ: Hà Nội',
-      home_slides: JSON.stringify(defaultSlides)
+      home_slides: '[]'
     };
 
     let sql = `-- SQL Script for Supabase\n`;
     sql += `CREATE TABLE IF NOT EXISTS site_content (key TEXT PRIMARY KEY, value TEXT);\n`;
     sql += `ALTER TABLE site_content ENABLE ROW LEVEL SECURITY;\n`;
     sql += `CREATE POLICY "Allow Public Access" ON site_content FOR ALL USING (true) WITH CHECK (true);\n\n`;
-    sql += `INSERT INTO storage.buckets (id, name, public) VALUES ('media', 'media', true) ON CONFLICT (id) DO NOTHING;\n`;
-    sql += `CREATE POLICY "Public Read" ON storage.objects FOR SELECT USING (bucket_id = 'media');\n`;
-    sql += `CREATE POLICY "Public Upload" ON storage.objects FOR INSERT WITH CHECK (bucket_id = 'media');\n`;
-    sql += `CREATE POLICY "Public Update" ON storage.objects FOR UPDATE USING (bucket_id = 'media');\n`;
-    sql += `CREATE POLICY "Public Delete" ON storage.objects FOR DELETE USING (bucket_id = 'media');\n\n`;
     sql += `INSERT INTO site_content (key, value) VALUES\n`;
     
     const valuesSql = keys.map(key => {
@@ -148,35 +136,6 @@ const App: React.FC = () => {
           <ProductInfoSection data={content} />
         </div>
       </main>
-      
-      <div className="bg-gray-950 text-white py-16 border-t-8 border-orange-600">
-        <div className="max-w-5xl mx-auto px-6">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-10">
-            <div>
-              <h3 className="text-3xl font-black text-white mb-2 italic">SUPABASE FULL SETUP</h3>
-              <p className="text-gray-400 text-sm">Chạy mã này để kích hoạt cả LƯU DỮ LIỆU và TẢI ẢNH.</p>
-            </div>
-            <div className="flex gap-3">
-              <button onClick={checkConnection} className="bg-gray-800 text-gray-300 px-6 py-4 rounded-xl font-black text-xs uppercase tracking-widest hover:bg-gray-700 transition-all">Kiểm tra kết nối</button>
-              <button onClick={() => setShowSqlPreview(!showSqlPreview)} className="bg-white text-black px-8 py-4 rounded-xl font-black text-xs uppercase tracking-[0.2em] hover:bg-orange-500 hover:text-white transition-all shadow-xl">MỞ HƯỚNG DẪN SETUP</button>
-            </div>
-          </div>
-          {showSqlPreview && (
-            <div className="relative group animate-in fade-in slide-in-from-bottom-4 duration-500">
-              <div className="absolute -inset-1 bg-gradient-to-r from-orange-600 to-pink-600 rounded-2xl blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
-              <div className="relative bg-black rounded-2xl overflow-hidden border border-white/10">
-                <div className="flex items-center justify-between px-6 py-4 bg-white/5 border-b border-white/10">
-                  <span className="text-[10px] font-black uppercase tracking-widest text-gray-500">PostgreSQL Script (Full Access)</span>
-                  <button onClick={() => { navigator.clipboard.writeText(generateSqlScript()); alert("Đã copy SQL script thành công!"); }} className="text-[10px] font-bold text-orange-400 hover:text-white transition-colors">COPY TO CLIPBOARD</button>
-                </div>
-                <pre className="p-8 text-[12px] font-mono text-orange-200/80 overflow-auto h-[400px] scrollbar-hide">
-                  {generateSqlScript()}
-                </pre>
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
       <Footer />
       <button onClick={() => setIsAdminMode(true)} className="fixed bottom-4 left-4 opacity-5 hover:opacity-100 bg-black text-white text-[8px] px-2 py-1 rounded transition-all z-[100]">DASHBOARD</button>
     </div>
