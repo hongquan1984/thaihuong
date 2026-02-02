@@ -17,7 +17,7 @@ const ProductInfoSection: React.FC<ProductInfoSectionProps> = ({ data }) => {
     "Lưu hương nước hoa Ý sang trọng"
   ];
 
-  const benefits = data?.specs_benefits 
+  const benefits: string[] = data?.specs_benefits 
     ? data.specs_benefits.split('\n').filter((i: string) => i.trim() !== '')
     : defaultBenefits;
 
@@ -51,7 +51,7 @@ const ProductInfoSection: React.FC<ProductInfoSectionProps> = ({ data }) => {
             </div>
 
             <div className="grid grid-cols-1 gap-6">
-              {benefits.map((benefit, idx) => (
+              {benefits.map((benefit: string, idx: number) => (
                 <div key={idx} className="flex items-center gap-6 group">
                    <div className="w-14 h-14 rounded-2xl bg-gray-50 flex items-center justify-center text-[#e91e63] group-hover:bg-[#e91e63] group-hover:text-white transition-all duration-300 shadow-sm">
                       <span className="font-black text-lg">0{idx + 1}</span>
