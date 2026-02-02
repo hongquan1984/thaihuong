@@ -22,25 +22,25 @@ const FeatureSlider: React.FC<FeatureSliderProps> = ({ data }) => {
   const slides: SlideItem[] = data?.home_slides ? JSON.parse(data.home_slides) : [
     {
       image: 'https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?auto=format&fit=crop&q=80&w=1200',
-      title: 'COLLAGEN GOLD',
+      title: 'Collagen Vàng',
       subtitle: '[DẦU GỘI PHỤC HỒI CHUYÊN SÂU]',
-      tag: 'BEST SELLER',
+      tag: 'BÁN CHẠY NHẤT',
       price: '550.000đ',
       oldPrice: '680.000đ'
     },
     {
       image: 'https://images.unsplash.com/photo-1526947425960-945c6e72858f?auto=format&fit=crop&q=80&w=1200',
-      title: 'KERATIN SILK',
+      title: 'Tinh Chất Keratin',
       subtitle: '[TINH DẦU DƯỠNG SIÊU MƯỢT]',
-      tag: 'NEW ARRIVAL',
+      tag: 'HÀNG MỚI VỀ',
       price: '420.000đ',
       oldPrice: '550.000đ'
     },
     {
       image: 'https://images.unsplash.com/photo-1552046122-03184de85e08?auto=format&fit=crop&q=80&w=1200',
-      title: 'HAIR RECOVERY MASK',
+      title: 'Mặt Nạ Tóc Phục Hồi',
       subtitle: '[MẶT NẠ Ủ TÓC TÁI TẠO]',
-      tag: 'TREATMENT',
+      tag: 'DÒNG ĐẶC TRỊ',
       price: '650.000đ',
       oldPrice: '790.000đ'
     }
@@ -58,9 +58,9 @@ const FeatureSlider: React.FC<FeatureSliderProps> = ({ data }) => {
               <button 
                 key={i} 
                 onClick={() => setActiveIndex(i)} 
-                className={`relative w-20 h-20 rounded-2xl overflow-hidden border-2 transition-all duration-500 ${activeIndex === i ? 'border-orange-500 scale-110 shadow-2xl shadow-orange-500/20' : 'border-gray-100 opacity-40 hover:opacity-100'}`}
+                className={`relative w-20 h-20 rounded-2xl overflow-hidden border-2 transition-all duration-500 ${activeIndex === i ? 'border-[#e91e63] scale-110 shadow-2xl shadow-pink-500/20' : 'border-gray-100 opacity-40 hover:opacity-100'}`}
               >
-                <img src={slide.image} className="w-full h-full object-cover" alt="Thumb" />
+                <img src={slide.image} className="w-full h-full object-cover" alt="Ảnh nhỏ" />
               </button>
             ))}
           </div>
@@ -76,18 +76,18 @@ const FeatureSlider: React.FC<FeatureSliderProps> = ({ data }) => {
             </div>
             
             <div className="absolute -bottom-6 -right-6">
-               <div className="bg-orange-500 text-white px-10 py-6 rounded-3xl shadow-2xl font-black text-xs uppercase tracking-widest transform rotate-3">
-                  100% Organic Italy
+               <div className="bg-[#e91e63] text-white px-10 py-6 rounded-3xl shadow-2xl font-black text-xs uppercase tracking-widest transform rotate-3">
+                  Sản Phẩm Hữu Cơ 100%
                </div>
             </div>
           </div>
         </div>
 
         {/* Content Info */}
-        <div className="lg:col-span-5 space-y-10">
+        <div className="lg:col-span-5 space-y-8">
           <div className="space-y-4">
-            <span className="text-orange-500 font-black text-[12px] uppercase tracking-[0.4em] block">{currentSlide.tag}</span>
-            <h2 className="text-[5rem] font-black text-gray-900 leading-[0.9] tracking-tighter uppercase">
+            <span className="text-[#e91e63] font-black text-[12px] uppercase tracking-[0.4em] block">{currentSlide.tag}</span>
+            <h2 className="font-script text-[5rem] text-gray-900 leading-[0.9] tracking-normal lowercase">
               {currentSlide.title}
             </h2>
             <p className="text-gray-400 font-bold text-sm tracking-widest italic uppercase">
@@ -95,7 +95,7 @@ const FeatureSlider: React.FC<FeatureSliderProps> = ({ data }) => {
             </p>
           </div>
 
-          <div className="space-y-8 p-10 bg-orange-50/50 rounded-[40px] border border-orange-100/50">
+          <div className="space-y-8 p-10 bg-pink-50/50 rounded-[40px] border border-pink-100/50">
             <div className="flex items-baseline gap-4">
               <span className="text-6xl font-black text-gray-900 tracking-tighter">{currentSlide.price}</span>
               <span className="text-xl text-gray-300 line-through font-bold">{currentSlide.oldPrice}</span>
@@ -116,7 +116,7 @@ const FeatureSlider: React.FC<FeatureSliderProps> = ({ data }) => {
                </div>
             </div>
 
-            <button className="w-full bg-gray-900 hover:bg-orange-600 text-white py-6 rounded-3xl font-black text-xs uppercase tracking-[0.3em] transition-all duration-300 shadow-xl shadow-gray-200">
+            <button className="w-full bg-[#e91e63] hover:bg-black text-white py-6 rounded-3xl font-black text-xs uppercase tracking-[0.3em] transition-all duration-300 shadow-xl shadow-pink-100">
               Đặt hàng ngay
             </button>
           </div>

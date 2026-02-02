@@ -17,19 +17,19 @@ const Footer: React.FC = () => {
           </div>
           <span className="font-black tracking-[0.5em] text-2xl uppercase text-gray-900">THÁI HƯƠNG</span>
           <p className="text-gray-400 text-sm mt-4 max-w-lg mx-auto leading-relaxed">
-            Hơn cả một thương hiệu chăm sóc tóc, Thái Hương là người bạn đồng hành trong hành trình đánh thức vẻ đẹp rạng rỡ của phái đẹp từ tinh hoa thiên nhiên Italia.
+            Hơn cả một thương hiệu mỹ phẩm, Thái Hương là người bạn đồng hành trong hành trình đánh thức vẻ đẹp rạng rỡ của phái đẹp từ tinh hoa thiên nhiên.
           </p>
         </div>
         
         <div className="flex justify-center space-x-12 text-[10px] font-black uppercase tracking-[0.3em] text-gray-400 mb-12">
-          <a href="#" className="hover:text-orange-500 transition-colors">Điều khoản</a>
-          <a href="#" className="hover:text-orange-500 transition-colors">Bảo mật</a>
-          <a href="#" className="hover:text-orange-500 transition-colors">Đại lý</a>
+          <a href="#" className="hover:text-orange-500 transition-colors">Điều khoản dịch vụ</a>
+          <a href="#" className="hover:text-orange-500 transition-colors">Chính sách bảo mật</a>
+          <a href="#" className="hover:text-orange-500 transition-colors">Hệ thống đại lý</a>
         </div>
         
         <div className="pt-12 border-t border-gray-50 flex flex-col md:flex-row justify-between items-center gap-6">
            <p className="text-gray-300 text-[9px] uppercase tracking-[0.4em]">
-            © 2024 THÁI HƯƠNG VIETNAM. MILANO SOUL.
+            © 2024 THÁI HƯƠNG VIỆT NAM. VẺ ĐẸP TỰ NHIÊN.
           </p>
           <div className="flex gap-4">
             <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:bg-orange-500 hover:text-white transition-all cursor-pointer">

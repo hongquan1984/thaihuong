@@ -9,8 +9,8 @@ const Hero: React.FC<HeroProps> = ({ data }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   
   const content = {
-    scriptTitle: 'Reflect Your Beauty',
-    description: data?.hero_desc || 'Lorem ipsum has become the industry standard for design mockups and prototypes. Thái Hương mang đến vẻ đẹp chuẩn Ý từ những nguyên liệu tinh túy nhất.',
+    scriptTitle: 'Đánh Thức Vẻ Đẹp',
+    description: data?.hero_desc || 'Thái Hương mang đến giải pháp chăm sóc da và tóc chuyên sâu, kết hợp tinh hoa thảo mộc và công nghệ hiện đại để tôn vinh nét đẹp tự nhiên của bạn.',
     videoUrl: data?.hero_video || 'https://player.vimeo.com/external/494252666.sd.mp4?s=72312154670233e466d79a29e7f539951684c30c&profile_id=164&oauth2_token_id=57447761',
   };
 
@@ -22,7 +22,7 @@ const Hero: React.FC<HeroProps> = ({ data }) => {
 
   return (
     <section className="relative w-full bg-white overflow-hidden py-20 px-6">
-      {/* Decorative background sketches (Simulated with CSS) */}
+      {/* Decorative background sketches */}
       <div className="absolute top-10 left-10 w-40 h-40 opacity-[0.05] pointer-events-none rotate-[-15deg]">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className="w-full h-full text-gray-900"><path strokeWidth={0.5} d="M12 2l2 4 4 2-4 2-2 4-2-4-4-2 4-2zM4 20l2-2 2 2-2 2zm16-4l2-2 2 2-2 2z" /></svg>
       </div>
@@ -35,7 +35,6 @@ const Hero: React.FC<HeroProps> = ({ data }) => {
         {/* Left Content */}
         <div className="flex flex-col items-start space-y-6 lg:pr-10 relative z-10">
           <div className="relative">
-             {/* Pink brush stroke effect behind title */}
              <div className="absolute -top-4 -left-6 w-72 h-32 bg-pink-100/50 rounded-full blur-2xl -z-10 rotate-[-5deg]"></div>
              <h2 className="font-script text-[clamp(3.5rem,8vw,6rem)] text-[#e91e63] leading-none mb-4">
                {content.scriptTitle}
@@ -47,7 +46,7 @@ const Hero: React.FC<HeroProps> = ({ data }) => {
           </p>
 
           <button className="bg-[#e91e63] text-white px-10 py-4 rounded-full font-black text-xs uppercase tracking-[0.2em] transition-all hover:bg-black hover:shadow-2xl active:scale-95 shadow-lg shadow-pink-200">
-            SHOP NOW
+            MUA NGAY
           </button>
         </div>
 
@@ -66,16 +65,13 @@ const Hero: React.FC<HeroProps> = ({ data }) => {
               <source src={content.videoUrl} type="video/mp4" />
             </video>
             
-            {/* Visual Leaf overlay simulation if desired, or keep it clean for video */}
             <div className="absolute bottom-0 right-0 w-1/3 h-1/2 pointer-events-none opacity-40">
-               {/* Simplified leaf shape */}
                <svg viewBox="0 0 100 100" fill="#004d40" className="w-full h-full transform rotate-[45deg] translate-y-1/4 translate-x-1/4">
                  <path d="M50 0 C70 30 100 50 50 100 C0 50 30 30 50 0" />
                </svg>
             </div>
           </div>
           
-          {/* Subtle glow behind media */}
           <div className="absolute inset-0 bg-[#e91e63]/5 blur-[100px] rounded-full -z-10"></div>
         </div>
       </div>

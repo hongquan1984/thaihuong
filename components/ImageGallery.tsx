@@ -26,7 +26,6 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ data }) => {
       if (scrollRef.current && !isHovered) {
         scrollRef.current.scrollLeft += scrollSpeed;
         
-        // Loop back to start if reached the end (with duplicated items logic or simple loop)
         if (scrollRef.current.scrollLeft >= scrollRef.current.scrollWidth - scrollRef.current.clientWidth) {
           scrollRef.current.scrollLeft = 0;
         }
@@ -42,10 +41,10 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ data }) => {
 
   return (
     <section className="py-20 animate-in fade-in duration-1000 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="text-center mb-12">
-           <h3 className="text-4xl font-black text-gray-900 tracking-tighter uppercase italic mb-2">HÌNH ẢNH SẢN PHẨM</h3>
-           <div className="w-20 h-1.5 bg-orange-500 mx-auto rounded-full"></div>
+      <div className="max-w-7xl mx-auto px-4 text-center">
+        <div className="relative inline-block mb-12">
+           <h3 className="font-script text-6xl text-[#e91e63] lowercase">Hình ảnh sản phẩm</h3>
+           <div className="w-1/2 h-1 bg-[#e91e63] mx-auto mt-2 rounded-full opacity-30"></div>
         </div>
 
         <div 
@@ -54,7 +53,6 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ data }) => {
           onMouseLeave={() => setIsHovered(false)}
           className="flex gap-6 overflow-x-auto scrollbar-hide py-10 px-4"
         >
-          {/* We duplicate the images once to ensure smooth loop if scroll speed is fast */}
           {[...images, ...images].map((img, idx) => (
             <div key={idx} className="min-w-[280px] md:min-w-[350px] aspect-[4/5] rounded-[40px] overflow-hidden shadow-2xl border-4 border-white transition-transform duration-500 hover:scale-105">
                <img src={img} alt={`Gallery ${idx}`} className="w-full h-full object-cover" />
