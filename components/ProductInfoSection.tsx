@@ -10,15 +10,11 @@ const ProductInfoSection: React.FC<ProductInfoSectionProps> = ({ data }) => {
   const specsImg = data?.specs_img || 'https://images.unsplash.com/photo-1608248597279-f99d160bfcbc?auto=format&fit=crop&q=80&w=400';
   
   const defaultBenefits = [
-    "Công nghệ Keratin thủy phân giúp tái tạo biểu bì tóc ngay lập tức",
-    "Chiết xuất tinh dầu Argan và Silk Protein từ vùng Tuscany, Italia",
-    "Phục hồi tóc hư tổn nặng do uốn, nhuộm, tẩy nhiều lần",
-    "Khóa màu tóc nhuộm, giữ cho màu bền và rực rỡ hơn",
-    "Dưỡng ẩm sâu, loại bỏ tình trạng tóc chẻ ngọn và khô xơ",
-    "Tạo màng bảo vệ tóc khỏi tia UV và nhiệt độ từ máy sấy",
-    "Hương thơm nước hoa Ý sang trọng, lưu hương lên đến 48 giờ",
-    "Độ pH trung tính, an toàn tuyệt đối cho da đầu nhạy cảm",
-    "Kết cấu kem mịn, không gây bết dính hay nặng tóc"
+    "Công nghệ Keratin thủy phân tái tạo lõi tóc",
+    "Chiết xuất Argan & Silk Protein từ Tuscany",
+    "Cân bằng độ pH 5.5 an toàn cho da đầu",
+    "Khóa màu nhuộm bền lâu trên 8 tuần",
+    "Lưu hương nước hoa lên đến 48 giờ"
   ];
 
   const benefits = data?.specs_benefits 
@@ -26,46 +22,51 @@ const ProductInfoSection: React.FC<ProductInfoSectionProps> = ({ data }) => {
     : defaultBenefits;
 
   return (
-    <section className="bg-gray-50 rounded-2xl p-8 lg:p-12 overflow-hidden relative">
-      <div className="relative z-10 max-w-5xl mx-auto">
-        <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Chi tiết sản phẩm</p>
-        <h3 className="text-2xl font-black text-orange-500 mb-8 uppercase">BỘ SẢN PHẨM PHỤC HỒI CAO CẤP {brandName}</h3>
-
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-          <div className="lg:col-span-4 relative flex justify-center">
-            <div className="bg-orange-400 w-full max-w-[280px] h-[400px] rounded-2xl absolute -bottom-10 -left-6 z-0 opacity-80"></div>
-            <img 
-              src={specsImg} 
-              alt="Hair product details" 
-              className="relative z-10 w-full max-w-[280px] rounded-xl shadow-2xl border-4 border-white object-cover aspect-[2/3]"
-            />
+    <section className="bg-white py-20">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+          <div className="relative">
+            <div className="absolute inset-0 bg-orange-100/50 rounded-[100px] blur-3xl transform rotate-12 -z-10"></div>
+            <div className="relative rounded-[80px] overflow-hidden border-[15px] border-white shadow-2xl">
+               <img 
+                src={specsImg} 
+                className="w-full h-full object-cover aspect-[4/5] hover:scale-105 transition-transform duration-1000" 
+                alt="Product Spec" 
+               />
+               <div className="absolute bottom-10 left-10">
+                  <div className="bg-white/80 backdrop-blur-xl p-8 rounded-[40px] shadow-2xl border border-white">
+                     <p className="text-[10px] font-black text-orange-500 uppercase tracking-widest mb-1">Xuất xứ</p>
+                     <p className="font-black text-gray-900 uppercase">Milano, Italy</p>
+                  </div>
+               </div>
+            </div>
           </div>
 
-          <div className="lg:col-span-8 space-y-8">
-            <div>
-              <h4 className="text-lg font-bold text-gray-800 border-l-4 border-orange-500 pl-4 mb-4">LỢI ÍCH VƯỢT TRỘI:</h4>
-              <ul className="text-sm text-gray-600 space-y-2 list-disc pl-5">
-                {benefits.map((item: string, idx: number) => (
-                  <li key={idx}>{item}</li>
-                ))}
-              </ul>
+          <div className="space-y-12">
+            <div className="space-y-4">
+              <h3 className="text-4xl font-black text-gray-900 tracking-tighter uppercase leading-tight italic">
+                Công nghệ đột phá <br/> phục hồi tế bào tóc
+              </h3>
+              <div className="w-24 h-1.5 bg-orange-500 rounded-full"></div>
             </div>
 
-            <div>
-              <h4 className="text-lg font-bold text-gray-800 border-l-4 border-orange-500 pl-4 mb-4">QUY TRÌNH CHUẨN SALON Ý:</h4>
-              <ul className="text-sm text-gray-600 space-y-2">
-                <li>• BƯỚC 1: Làm sạch tóc với dầu gội Collagen Thái Hương</li>
-                <li>• BƯỚC 2: Thoa dầu xả Keratin, massage nhẹ nhàng trong 3-5 phút</li>
-                <li>• BƯỚC 3: Xả sạch và thấm khô bằng khăn bông</li>
-                <li>• BƯỚC 4: Thoa 2 giọt tinh dầu Silk Oil lên ngọn tóc để hoàn thiện độ bóng</li>
-              </ul>
+            <div className="grid grid-cols-1 gap-6">
+              {benefits.map((benefit, idx) => (
+                <div key={idx} className="flex items-center gap-6 group">
+                   <div className="w-14 h-14 rounded-2xl bg-gray-50 flex items-center justify-center text-orange-500 group-hover:bg-orange-500 group-hover:text-white transition-all duration-300 shadow-sm">
+                      <span className="font-black text-lg">0{idx + 1}</span>
+                   </div>
+                   <p className="text-gray-600 font-bold uppercase text-[12px] tracking-widest">{benefit}</p>
+                </div>
+              ))}
             </div>
-            
-            <div className="pt-8 border-t border-gray-200">
-               <h4 className="text-sm font-bold text-gray-800 mb-2">NGUỒN GỐC & XUẤT XỨ:</h4>
-               <p className="text-[11px] text-gray-400 leading-relaxed italic uppercase tracking-widest">
-                 MANUFACTURED IN MILAN, ITALY | FORMULATED BY THÁI HƯƠNG BIOTECH | EXCLUSIVE DISTRIBUTION BY THÁI HƯƠNG VIETNAM
-               </p>
+
+            <div className="pt-10 border-t border-gray-100">
+               <div className="flex items-center gap-8 opacity-40">
+                  <span className="font-black text-[10px] uppercase tracking-[0.5em]">Organic</span>
+                  <span className="font-black text-[10px] uppercase tracking-[0.5em]">Paraben Free</span>
+                  <span className="font-black text-[10px] uppercase tracking-[0.5em]">Natural Silk</span>
+               </div>
             </div>
           </div>
         </div>
