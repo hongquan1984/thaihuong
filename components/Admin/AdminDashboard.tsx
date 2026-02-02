@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { supabase, uploadImage } from '../../lib/supabase';
+import { supabase, uploadFile } from '../../lib/supabase';
 
 interface SlideItem {
   image: string;
@@ -19,6 +19,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onExit }) => {
   const [formData, setFormData] = useState<any>({});
   const [slides, setSlides] = useState<SlideItem[]>([]);
   const [saving, setSaving] = useState(false);
+  const [uploadingVideo, setUploadingVideo] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -54,7 +55,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onExit }) => {
     if (file) {
       try {
         setSaving(true);
-        const url = await uploadImage(file);
+        const url = await uploadFile(file);
         handleChange(key, url);
         alert("Tải lên thành công!");
       } catch (err: any) {
@@ -65,12 +66,32 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onExit }) => {
     }
   };
 
+  const handleVideoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.size > 50 * 1024 * 1024) { // Giới hạn 50MB cho video
+        alert("File quá lớn! Vui lòng chọn video dưới 50MB.");
+        return;
+      }
+      try {
+        setUploadingVideo(true);
+        const url = await uploadFile(file);
+        handleChange('hero_video', url);
+        alert("Tải video lên Supabase thành công!");
+      } catch (err: any) {
+        alert(`Lỗi tải video: ${err.message}`);
+      } finally {
+        setUploadingVideo(false);
+      }
+    }
+  };
+
   const addSlide = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       try {
         setSaving(true);
-        const url = await uploadImage(file);
+        const url = await uploadFile(file);
         const newSlide: SlideItem = {
           image: url,
           title: 'TIÊU ĐỀ SLIDE MỚI',
@@ -170,10 +191,10 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onExit }) => {
           </div>
           <button 
             onClick={handleSave}
-            disabled={saving}
+            disabled={saving || uploadingVideo}
             className="bg-orange-600 hover:bg-orange-700 disabled:bg-gray-400 text-white px-10 py-4 rounded-2xl font-black text-sm uppercase tracking-widest shadow-2xl transition-all flex items-center gap-3"
           >
-            {saving ? 'Đang lưu...' : 'Lưu tất cả thay đổi'}
+            {(saving || uploadingVideo) ? 'Đang xử lý...' : 'Lưu tất cả thay đổi'}
           </button>
         </header>
 
@@ -194,11 +215,38 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onExit }) => {
                   <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Thương hiệu 2</label>
                   <input className="w-full p-4 bg-gray-50 border border-gray-100 rounded-2xl font-bold outline-none focus:border-orange-500" value={formData.hero_brand2 || ''} onChange={(e) => handleChange('hero_brand2', e.target.value)} />
                 </div>
-                <div className="space-y-2 pt-4">
-                  <label className="text-[10px] font-black text-orange-500 uppercase tracking-widest">Link Video Hero (MP4)</label>
-                  <input className="w-full p-4 bg-orange-50 border border-orange-100 rounded-2xl font-medium outline-none focus:border-orange-500 text-blue-600" value={formData.hero_video || ''} onChange={(e) => handleChange('hero_video', e.target.value)} placeholder="Dán link mp4 trực tiếp..." />
+                
+                <div className="p-8 bg-orange-50/50 border-2 border-dashed border-orange-200 rounded-[32px] space-y-4">
+                  <div className="flex justify-between items-center">
+                    <label className="text-[11px] font-black text-orange-600 uppercase tracking-widest">Video Hero (Supabase)</label>
+                    {uploadingVideo && <span className="text-[10px] text-orange-500 animate-pulse font-bold italic">Đang tải video...</span>}
+                  </div>
+                  
+                  {formData.hero_video && (
+                    <div className="relative w-full aspect-video rounded-2xl overflow-hidden bg-black border-4 border-white shadow-xl">
+                       <video src={formData.hero_video} className="w-full h-full object-cover opacity-60" muted />
+                       <div className="absolute inset-0 flex items-center justify-center">
+                          <span className="text-[9px] text-white font-black bg-black/50 px-3 py-1 rounded-full uppercase">Đang sử dụng</span>
+                       </div>
+                    </div>
+                  )}
+
+                  <div className="flex gap-4">
+                    <label className="flex-1 bg-white border border-orange-200 hover:border-orange-500 text-orange-600 py-4 rounded-2xl font-black text-[10px] uppercase text-center cursor-pointer transition-all shadow-sm">
+                      {uploadingVideo ? 'ĐANG TẢI...' : 'TẢI VIDEO MỚI (MP4)'}
+                      <input type="file" className="hidden" accept="video/mp4" onChange={handleVideoUpload} disabled={uploadingVideo} />
+                    </label>
+                    <button 
+                      onClick={() => handleChange('hero_video', '')}
+                      className="px-6 py-4 bg-red-50 text-red-500 rounded-2xl font-black text-[10px] uppercase hover:bg-red-500 hover:text-white transition-all"
+                    >
+                      XÓA
+                    </button>
+                  </div>
+                  <p className="text-[9px] text-gray-400 text-center font-medium italic">Khuyên dùng: Tỷ lệ 1:1 hoặc 4:5, dung lượng &lt; 50MB</p>
                 </div>
               </div>
+
               <div className="space-y-8">
                 <div className="space-y-4">
                   <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Ảnh Floating (Thỏi nhỏ)</label>

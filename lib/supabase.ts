@@ -1,3 +1,4 @@
+
 import { createClient } from '@supabase/supabase-js';
 
 /**
@@ -5,7 +6,6 @@ import { createClient } from '@supabase/supabase-js';
  * Vite will replace these strings during the build process.
  */
 const getEnvVar = (key: string, defaultValue: string): string => {
-  // Use a try-catch or check to ensure import.meta.env exists
   try {
     const env = (import.meta as any).env;
     return (env && env[key]) || defaultValue;
@@ -19,14 +19,17 @@ const supabaseAnonKey = getEnvVar('VITE_SUPABASE_ANON_KEY', 'eyJhbGciOiJIUzI1NiI
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-export const uploadImage = async (file: File) => {
+export const uploadFile = async (file: File) => {
   const fileExt = file.name.split('.').pop();
   const fileName = `${Math.random().toString(36).substring(2)}.${fileExt}`;
   const filePath = `uploads/${fileName}`;
 
   const { error: uploadError } = await supabase.storage
     .from('media')
-    .upload(filePath, file);
+    .upload(filePath, file, {
+      cacheControl: '3600',
+      upsert: false
+    });
 
   if (uploadError) throw uploadError;
 
