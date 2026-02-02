@@ -13,11 +13,11 @@ const Login: React.FC<LoginProps> = ({ onLogin, onCancel }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Using the provided credentials
-    if (username === 'thaihuong' && password === 's$5MpWT9k9E?Z/@') {
+    // Cập nhật thông tin đăng nhập theo yêu cầu
+    if (username === 'hongquan0508@gmail.com' && password === '123456789') {
       onLogin();
     } else {
-      setError('Tên đăng nhập hoặc mật khẩu không đúng');
+      setError('Email hoặc mật khẩu không chính xác');
     }
   };
 
@@ -32,18 +32,18 @@ const Login: React.FC<LoginProps> = ({ onLogin, onCancel }) => {
               </svg>
             </div>
           </div>
-          <h2 className="text-2xl font-bold text-gray-800">HANMI ADMIN</h2>
-          <p className="text-gray-500 text-sm mt-1">Đăng nhập để quản lý nội dung</p>
+          <h2 className="text-2xl font-bold text-gray-800 uppercase tracking-tighter">Quản trị Hanmi</h2>
+          <p className="text-gray-500 text-sm mt-1">Sử dụng tài khoản hongquan0508@gmail.com</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label className="block text-xs font-bold text-gray-500 uppercase mb-2 tracking-wider">Tên đăng nhập</label>
+            <label className="block text-xs font-bold text-gray-500 uppercase mb-2 tracking-wider">Email đăng nhập</label>
             <input
-              type="text"
+              type="email"
               required
               className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-200 transition-all outline-none"
-              placeholder="thaihuong"
+              placeholder="hongquan0508@gmail.com"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
@@ -61,14 +61,14 @@ const Login: React.FC<LoginProps> = ({ onLogin, onCancel }) => {
             />
           </div>
 
-          {error && <p className="text-red-500 text-xs font-medium text-center">{error}</p>}
+          {error && <p className="text-red-500 text-xs font-medium text-center bg-red-50 py-2 rounded-lg">{error}</p>}
 
           <div className="space-y-3 pt-2">
             <button
               type="submit"
               className="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-xl shadow-lg shadow-orange-100 transition-all active:scale-[0.98]"
             >
-              Đăng nhập
+              Đăng nhập hệ thống
             </button>
             <button
               type="button"
