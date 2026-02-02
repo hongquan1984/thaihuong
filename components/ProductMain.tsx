@@ -1,7 +1,12 @@
 
 import React, { useState } from 'react';
 
-const ProductMain: React.FC = () => {
+// Define props interface to fix TypeScript error
+interface ProductMainProps {
+  data?: any;
+}
+
+const ProductMain: React.FC<ProductMainProps> = ({ data }) => {
   const [quantity, setQuantity] = useState(1);
   const images = [
     'https://picsum.photos/seed/prod1/600/600',
@@ -23,7 +28,7 @@ const ProductMain: React.FC = () => {
           <img src={images[0]} alt="Main product" className="w-full rounded-lg shadow-md" />
           <div className="absolute inset-x-0 bottom-4 px-4">
             <div className="bg-white/90 p-3 rounded-md backdrop-blur-sm border border-orange-100">
-               <h4 className="font-bold text-orange-600">WIICARE SUN</h4>
+               <h4 className="font-bold text-orange-600">{data?.hero_brand || 'WIICARE'} SUN</h4>
                <p className="text-xs text-gray-600">Khả năng chống nắng phổ rộng SPF 50+, PA++++</p>
             </div>
           </div>
@@ -34,10 +39,10 @@ const ProductMain: React.FC = () => {
       <div className="space-y-6">
         <div>
           <h2 className="text-3xl font-bold text-gray-800 leading-tight">
-            BỘ ĐÔI BẢO VỆ DA - NGĂN LÃO HÓA
+            {data?.prod_name || 'BỘ ĐÔI BẢO VỆ DA - NGĂN LÃO HÓA'}
           </h2>
           <p className="text-orange-500 font-medium text-sm mt-1">
-            [XỊT CHỐNG NẮNG WIICARE + THỎI COLLAGEN TƯƠI ĐA CHỨC NĂNG GIOVENTÙ]
+            [{data?.hero_brand || 'WIICARE'} + {data?.hero_brand2 || 'GIOVENTÙ'}]
           </p>
         </div>
 
@@ -49,7 +54,7 @@ const ProductMain: React.FC = () => {
         </div>
 
         <div className="flex items-baseline gap-3">
-          <span className="text-4xl font-bold text-gray-900">899,000đ</span>
+          <span className="text-4xl font-bold text-gray-900">{data?.hero_price || '899,000đ'}</span>
           <span className="bg-teal-100 text-teal-700 text-xs font-bold px-2 py-1 rounded">-20%</span>
         </div>
 

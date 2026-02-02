@@ -7,36 +7,66 @@ import RelatedProducts from './components/RelatedProducts';
 import ProductInfoSection from './components/ProductInfoSection';
 import Footer from './components/Footer';
 import AdminDashboard from './components/Admin/AdminDashboard';
+import Login from './components/Admin/Login';
 import { supabase } from './lib/supabase';
 
 const App: React.FC = () => {
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [isAdminMode, setIsAdminMode] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(() => {
+    return sessionStorage.getItem('hanmi_auth') === 'true';
+  });
   const [content, setContent] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check for admin route
-    if (window.location.hash === '#admin') {
-      setIsAdmin(true);
-    }
+    // Detect #admin in URL
+    const checkHash = () => {
+      if (window.location.hash === '#admin') {
+        setIsAdminMode(true);
+      }
+    };
+
+    checkHash();
+    window.addEventListener('hashchange', checkHash);
 
     const fetchContent = async () => {
-      const { data, error } = await supabase.from('site_content').select('*');
-      if (data) {
-        const contentMap = data.reduce((acc: any, item: any) => {
-          acc[item.key] = item.value;
-          return acc;
-        }, {});
-        setContent(contentMap);
+      try {
+        const { data, error } = await supabase.from('site_content').select('*');
+        if (data) {
+          const contentMap = data.reduce((acc: any, item: any) => {
+            acc[item.key] = item.value;
+            return acc;
+          }, {});
+          setContent(contentMap);
+        }
+      } catch (err) {
+        console.error("Failed to fetch content", err);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     };
 
     fetchContent();
+    return () => window.removeEventListener('hashchange', checkHash);
   }, []);
 
-  if (isAdmin) {
-    return <AdminDashboard onExit={() => setIsAdmin(false)} />;
+  const handleLogin = () => {
+    setIsAuthenticated(true);
+    sessionStorage.setItem('hanmi_auth', 'true');
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    setIsAdminMode(false);
+    sessionStorage.removeItem('hanmi_auth');
+    window.location.hash = '';
+  };
+
+  if (isAdminMode) {
+    if (!isAuthenticated) {
+      return <Login onLogin={handleLogin} onCancel={() => setIsAdminMode(false)} />;
+    }
+    return <AdminDashboard onExit={handleLogout} />;
   }
 
   return (
@@ -53,10 +83,10 @@ const App: React.FC = () => {
       <Footer />
       {/* Hidden trigger for admin demo */}
       <button 
-        onClick={() => setIsAdmin(true)}
-        className="fixed bottom-4 right-4 opacity-0 hover:opacity-100 bg-gray-800 text-white p-2 rounded text-xs"
+        onClick={() => setIsAdminMode(true)}
+        className="fixed bottom-4 right-4 opacity-0 hover:opacity-100 bg-gray-800/20 text-gray-800 p-2 rounded text-[10px] transition-opacity"
       >
-        Admin Mode
+        Quản trị
       </button>
     </div>
   );
