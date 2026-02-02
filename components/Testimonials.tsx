@@ -19,14 +19,14 @@ const Testimonials: React.FC<TestimonialsProps> = ({ data }) => {
       avatar: 'https://i.pravatar.cc/150?u=hair1',
       name: 'Nguyễn Bích Liên',
       role: 'Chủ tiệm Hair Salon',
-      content: 'Mình đã dùng thử rất nhiều dòng dầu gội Ý, nhưng HANMI thực sự khác biệt. Tóc khách hàng sau khi xả rất tơi, mềm và có mùi thơm cực kỳ quý tộc.',
+      content: 'Mình đã dùng thử rất nhiều dòng dầu gội Ý, nhưng Thái Hương thực sự khác biệt. Tóc khách hàng sau khi xả rất tơi, mềm và có mùi thơm cực kỳ quý tộc.',
       rating: 5
     },
     {
       avatar: 'https://i.pravatar.cc/150?u=hair2',
       name: 'Lê Hoàng Minh',
       role: 'Nhà tạo mẫu tóc',
-      content: 'Bộ collagen phục hồi của HANMI cứu được những mái tóc xơ xác nhất. Keratin thấm sâu, giúp tóc chắc khỏe từ lõi chứ không phải chỉ bóng mượt bên ngoài.',
+      content: 'Bộ collagen phục hồi của Thái Hương cứu được những mái tóc xơ xác nhất. Keratin thấm sâu, giúp tóc chắc khỏe từ lõi chứ không phải chỉ bóng mượt bên ngoài.',
       rating: 5
     },
     {

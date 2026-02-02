@@ -24,7 +24,7 @@ const FeatureSlider: React.FC<FeatureSliderProps> = ({ data }) => {
       image: 'https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?auto=format&fit=crop&q=80&w=1200',
       title: 'DẦU GỘI COLLAGEN PHỤC HỒI',
       subtitle: '[NHẬP KHẨU NGUYÊN CHAI TỪ ITALIA]',
-      tag: 'HANMI ITALY GOLD',
+      tag: 'THÁI HƯƠNG ITALY GOLD',
       buyLink: '#',
       price: '550.000đ',
       oldPrice: '680.000đ'
@@ -33,7 +33,7 @@ const FeatureSlider: React.FC<FeatureSliderProps> = ({ data }) => {
       image: 'https://images.unsplash.com/photo-1526947425960-945c6e72858f?auto=format&fit=crop&q=80&w=1200',
       title: 'TINH DẦU DƯỠNG TÓC KERATIN',
       subtitle: '[SIÊU MƯỢT, KHÔNG BẾT DÍNH]',
-      tag: 'HANMI SILK OIL',
+      tag: 'THÁI HƯƠNG SILK OIL',
       buyLink: '#',
       price: '420.000đ',
       oldPrice: '550.000đ'
@@ -42,7 +42,7 @@ const FeatureSlider: React.FC<FeatureSliderProps> = ({ data }) => {
       image: 'https://images.unsplash.com/photo-1552046122-03184de85e08?auto=format&fit=crop&q=80&w=1200',
       title: 'MẶT NẠ Ủ TÓC CHUYÊN SÂU',
       subtitle: '[TÁI TẠO CẤU TRÚC TÓC HƯ TỔN]',
-      tag: 'HANMI HAIR MASK',
+      tag: 'THÁI HƯƠNG HAIR MASK',
       buyLink: '#',
       price: '650.000đ',
       oldPrice: '790.000đ'

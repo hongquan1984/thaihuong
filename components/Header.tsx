@@ -10,6 +10,8 @@ const Header: React.FC = () => {
     { label: 'Liên hệ', href: '#' },
   ];
 
+  const logoUrl = 'https://down-bs-vn.img.susercontent.com/vn-11134216-820l4-mf3qz730cj6565_tn.webp';
+
   return (
     <header className="sticky top-0 z-50 bg-[#fbf1e9]/80 backdrop-blur-md">
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
@@ -22,12 +24,14 @@ const Header: React.FC = () => {
         </div>
         
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8">
-            <svg viewBox="0 0 100 100" className="fill-orange-500">
-              <path d="M50 10 L60 40 L90 40 L65 60 L75 90 L50 70 L25 90 L35 60 L10 40 L40 40 Z" />
-            </svg>
+          <div className="w-10 h-10 overflow-hidden rounded-lg">
+            <img 
+              src={logoUrl} 
+              alt="Thái Hương Logo" 
+              className="w-full h-full object-cover"
+            />
           </div>
-          <span className="font-black tracking-[0.3em] text-xl uppercase text-gray-800">HANMI</span>
+          <span className="font-black tracking-[0.3em] text-xl uppercase text-gray-800">THÁI HƯƠNG</span>
         </div>
 
         <div className="flex-1 flex justify-end space-x-10">

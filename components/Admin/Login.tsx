@@ -11,6 +11,8 @@ const Login: React.FC<LoginProps> = ({ onLogin, onCancel }) => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
+  const logoUrl = 'https://down-bs-vn.img.susercontent.com/vn-11134216-820l4-mf3qz730cj6565_tn.webp';
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Cập nhật thông tin đăng nhập theo yêu cầu
@@ -26,13 +28,15 @@ const Login: React.FC<LoginProps> = ({ onLogin, onCancel }) => {
       <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8 border border-orange-100">
         <div className="text-center mb-8">
           <div className="flex justify-center mb-4">
-            <div className="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center shadow-lg shadow-orange-200">
-              <svg viewBox="0 0 100 100" className="w-8 h-8 fill-white">
-                <path d="M50 10 L60 40 L90 40 L65 60 L75 90 L50 70 L25 90 L35 60 L10 40 L40 40 Z" />
-              </svg>
+            <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center shadow-lg shadow-orange-100 overflow-hidden p-1">
+              <img 
+                src={logoUrl} 
+                alt="Thái Hương Logo" 
+                className="w-full h-full object-cover rounded-xl"
+              />
             </div>
           </div>
-          <h2 className="text-2xl font-bold text-gray-800 uppercase tracking-tighter">Quản trị Hanmi</h2>
+          <h2 className="text-2xl font-bold text-gray-800 uppercase tracking-tighter">Quản trị Thái Hương</h2>
           <p className="text-gray-500 text-sm mt-1">Sử dụng tài khoản hongquan0508@gmail.com</p>
         </div>
 

@@ -11,7 +11,7 @@ const Hero: React.FC<HeroProps> = ({ data }) => {
   const content = {
     title: data?.hero_title || 'TINH HOA CHĂM SÓC TÓC CHUẨN SALON Ý',
     titleSize: data?.hero_title_size || '12px',
-    brand: data?.hero_brand || 'HANMI PROFESSIONAL',
+    brand: data?.hero_brand || 'THÁI HƯƠNG PROFESSIONAL',
     brandSize: data?.hero_brand_size || '5rem',
     secondaryBrand: data?.hero_brand2 || 'ITALY HAIR CARE',
     secondaryBrandSize: data?.hero_brand2_size || '4rem',
@@ -127,7 +127,7 @@ const Hero: React.FC<HeroProps> = ({ data }) => {
           </div>
 
           <div className="absolute -top-12 -right-8 w-44 h-44 rounded-[45px] overflow-hidden shadow-2xl border-[6px] border-white z-20 hidden lg:block animate-float">
-             <img src={content.img1} className="w-full h-full object-cover" alt="Hair Care" />
+             <img src={content.img1} className="w-full h-full object-cover" alt="Thái Hương Hair Care" />
           </div>
 
           <div className="absolute -bottom-20 -left-20 w-80 h-80 bg-orange-300/20 rounded-full blur-[80px] z-0"></div>

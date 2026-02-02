@@ -143,7 +143,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onExit }) => {
   return (
     <div className="flex h-screen bg-[#f8fafc] font-sans">
       <aside className="w-72 bg-gray-950 text-white p-8 flex flex-col shadow-2xl z-20">
-        <div className="mb-12 flex items-center gap-4 font-black">HANMI ADMIN</div>
+        <div className="mb-12 flex items-center gap-4 font-black">THÁI HƯƠNG ADMIN</div>
         <nav className="space-y-2 flex-1">
           {[
             { id: 'hero', label: 'Bố cục Hero', icon: '🏠' },
@@ -222,7 +222,6 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onExit }) => {
             </div>
           )}
 
-          {/* Other tabs remain similar but with updated demo labels in mind */}
           {activeTab === 'hero' && (
              <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
                <div className="space-y-4">

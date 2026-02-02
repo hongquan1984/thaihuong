@@ -54,7 +54,7 @@ const ProductInfoSection: React.FC<ProductInfoSectionProps> = ({ data }) => {
             <div>
               <h4 className="text-lg font-bold text-gray-800 border-l-4 border-orange-500 pl-4 mb-4">QUY TRÌNH CHUẨN SALON Ý:</h4>
               <ul className="text-sm text-gray-600 space-y-2">
-                <li>• BƯỚC 1: Làm sạch tóc với dầu gội Collagen Hanmi</li>
+                <li>• BƯỚC 1: Làm sạch tóc với dầu gội Collagen Thái Hương</li>
                 <li>• BƯỚC 2: Thoa dầu xả Keratin, massage nhẹ nhàng trong 3-5 phút</li>
                 <li>• BƯỚC 3: Xả sạch và thấm khô bằng khăn bông</li>
                 <li>• BƯỚC 4: Thoa 2 giọt tinh dầu Silk Oil lên ngọn tóc để hoàn thiện độ bóng</li>
@@ -64,7 +64,7 @@ const ProductInfoSection: React.FC<ProductInfoSectionProps> = ({ data }) => {
             <div className="pt-8 border-t border-gray-200">
                <h4 className="text-sm font-bold text-gray-800 mb-2">NGUỒN GỐC & XUẤT XỨ:</h4>
                <p className="text-[11px] text-gray-400 leading-relaxed italic uppercase tracking-widest">
-                 MANUFACTURED IN MILAN, ITALY | FORMULATED BY HANMI BIOTECH | EXCLUSIVE DISTRIBUTION BY HANMI VIETNAM
+                 MANUFACTURED IN MILAN, ITALY | FORMULATED BY THÁI HƯƠNG BIOTECH | EXCLUSIVE DISTRIBUTION BY THÁI HƯƠNG VIETNAM
                </p>
             </div>
           </div>
