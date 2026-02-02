@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 interface SlideItem {
   image: string;
@@ -17,18 +17,49 @@ interface FeatureSliderProps {
 
 const FeatureSlider: React.FC<FeatureSliderProps> = ({ data }) => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const scrollRef = useRef<HTMLDivElement>(null);
   
   const slides: SlideItem[] = data?.home_slides ? JSON.parse(data.home_slides) : [
     {
-      image: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&q=80&w=1200',
-      title: 'BỘ ĐÔI BẢO VỆ DA - NGĂN LÃO HÓA',
-      subtitle: '[THÁI HƯƠNG COSMETIC + COLAGEN SHAMPOO]',
-      tag: 'THÁI HƯƠNG COSMETIC SUN',
+      image: 'https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?auto=format&fit=crop&q=80&w=1200',
+      title: 'DẦU GỘI COLLAGEN PHỤC HỒI',
+      subtitle: '[NHẬP KHẨU NGUYÊN CHAI TỪ ITALIA]',
+      tag: 'HANMI ITALY GOLD',
       buyLink: '#',
-      price: '899.000đ',
-      oldPrice: '1.070.000đ'
+      price: '550.000đ',
+      oldPrice: '680.000đ'
+    },
+    {
+      image: 'https://images.unsplash.com/photo-1526947425960-945c6e72858f?auto=format&fit=crop&q=80&w=1200',
+      title: 'TINH DẦU DƯỠNG TÓC KERATIN',
+      subtitle: '[SIÊU MƯỢT, KHÔNG BẾT DÍNH]',
+      tag: 'HANMI SILK OIL',
+      buyLink: '#',
+      price: '420.000đ',
+      oldPrice: '550.000đ'
+    },
+    {
+      image: 'https://images.unsplash.com/photo-1552046122-03184de85e08?auto=format&fit=crop&q=80&w=1200',
+      title: 'MẶT NẠ Ủ TÓC CHUYÊN SÂU',
+      subtitle: '[TÁI TẠO CẤU TRÚC TÓC HƯ TỔN]',
+      tag: 'HANMI HAIR MASK',
+      buyLink: '#',
+      price: '650.000đ',
+      oldPrice: '790.000đ'
     }
   ];
+
+  useEffect(() => {
+    if (scrollRef.current) {
+      const activeThumb = scrollRef.current.children[activeIndex] as HTMLElement;
+      if (activeThumb) {
+        scrollRef.current.scrollTo({
+          top: activeThumb.offsetTop - scrollRef.current.offsetHeight / 2 + activeThumb.offsetHeight / 2,
+          behavior: 'smooth'
+        });
+      }
+    }
+  }, [activeIndex]);
 
   if (slides.length === 0) return null;
 
@@ -42,123 +73,83 @@ const FeatureSlider: React.FC<FeatureSliderProps> = ({ data }) => {
     }
   };
 
+  const scrollUp = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({ top: -150, behavior: 'smooth' });
+    }
+  };
+
+  const scrollDown = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({ top: 150, behavior: 'smooth' });
+    }
+  };
+
   return (
     <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start animate-in fade-in duration-700">
-      {/* Thumbnails & Main Image Group */}
-      <div className="lg:col-span-7 flex flex-col md:flex-row gap-4">
-        <div className="flex flex-row md:flex-col gap-3 order-2 md:order-1 overflow-x-auto md:overflow-visible pb-2 md:pb-0 scrollbar-hide">
-          {slides.map((slide, i) => (
-            <button
-              key={i}
-              onClick={() => setActiveIndex(i)}
-              className={`relative w-20 md:w-24 aspect-square rounded-xl overflow-hidden border-2 transition-all flex-shrink-0 ${
-                activeIndex === i ? 'border-orange-500 scale-105 shadow-lg' : 'border-transparent opacity-60 hover:opacity-100'
-              }`}
-            >
-              <img src={slide.image} className="w-full h-full object-cover" alt={`Thumb ${i}`} />
-              {activeIndex === i && <div className="absolute inset-0 bg-orange-500/10 animate-pulse"></div>}
-            </button>
-          ))}
+      <div className="lg:col-span-7 flex flex-col md:flex-row gap-6">
+        <div className="relative flex flex-row md:flex-col items-center order-2 md:order-1">
+          <button onClick={scrollUp} className="hidden md:flex mb-2 text-gray-400 hover:text-orange-500 transition-colors z-10">
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 15l7-7 7 7" /></svg>
+          </button>
+          <div ref={scrollRef} className="flex flex-row md:flex-col gap-4 overflow-x-auto md:overflow-y-auto scrollbar-hide snap-y snap-mandatory scroll-smooth" style={{ maxHeight: 'calc(600px - 60px)', width: 'auto' }}>
+            {slides.map((slide, i) => (
+              <button key={i} onClick={() => setActiveIndex(i)} className={`relative w-20 md:w-28 aspect-square rounded-[20px] overflow-hidden border-2 transition-all flex-shrink-0 snap-start ${activeIndex === i ? 'border-orange-500 scale-105 shadow-xl shadow-orange-500/20' : 'border-transparent opacity-50 hover:opacity-100'}`}>
+                <img src={slide.image} className="w-full h-full object-cover" alt={`Thumb ${i}`} />
+              </button>
+            ))}
+          </div>
+          <button onClick={scrollDown} className="hidden md:flex mt-2 text-gray-400 hover:text-orange-500 transition-colors z-10">
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" /></svg>
+          </button>
         </div>
 
         <div className="flex-1 relative order-1 md:order-2 group">
-          <div className="overflow-hidden rounded-[32px] shadow-2xl bg-gray-100 aspect-square md:aspect-auto md:h-[600px]">
-            <img 
-              key={activeIndex}
-              src={currentSlide.image} 
-              className="w-full h-full object-cover animate-in fade-in zoom-in duration-500"
-            />
+          <div className="overflow-hidden rounded-[45px] shadow-[0_40px_80px_-15px_rgba(0,0,0,0.1)] bg-gray-100 aspect-square md:aspect-auto md:h-[600px] border-[12px] border-white">
+            <img key={activeIndex} src={currentSlide.image} className="w-full h-full object-cover animate-in fade-in zoom-in duration-500" />
           </div>
-          
-          <div className="absolute bottom-6 left-6 right-6">
-            <div className="bg-white/90 backdrop-blur-md p-6 rounded-2xl border border-white shadow-xl max-w-sm transform transition-transform group-hover:translate-y-[-5px]">
+          <div className="absolute bottom-8 left-8 right-8">
+            <div className="bg-white/90 backdrop-blur-xl p-7 rounded-[35px] border border-white/50 shadow-2xl max-w-xs transform transition-all group-hover:translate-y-[-10px]">
                <h4 className="font-black text-orange-600 text-lg uppercase tracking-tight">{currentSlide.tag}</h4>
-               <p className="text-xs text-gray-500 font-medium mt-1">Sản phẩm chất lượng cao được tin dùng</p>
-               <div className="absolute bottom-4 right-4 bg-gray-900 rounded-full p-2 text-white">
-                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
-               </div>
+               <p className="text-[10px] text-gray-400 font-bold uppercase mt-1 tracking-widest">Sản phẩm từ Italia</p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Text Content */}
-      <div className="lg:col-span-5 flex flex-col justify-center h-full space-y-8 py-6">
-        <div>
-          <h2 className="text-4xl md:text-5xl font-black text-gray-900 leading-[1.1] tracking-tighter mb-4 uppercase">
+      <div className="lg:col-span-5 flex flex-col justify-center h-full space-y-8 py-6 pl-0 lg:pl-10">
+        <div className="space-y-4">
+          <div className="inline-block px-4 py-1.5 bg-gray-100 rounded-full">
+             <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Italian Professional Hair</span>
+          </div>
+          <h2 className="text-4xl md:text-6xl font-black text-gray-900 leading-[1] tracking-tighter uppercase">
             {currentSlide.title}
           </h2>
-          <p className="text-orange-500 font-black text-sm uppercase tracking-widest">
+          <p className="text-orange-500 font-black text-[13px] uppercase tracking-[0.2em] italic">
             {currentSlide.subtitle}
           </p>
         </div>
 
         <div className="space-y-6">
           <div className="flex items-center gap-4">
-            <div className="flex-1 bg-gray-100 h-3 rounded-full overflow-hidden">
+            <div className="flex-1 bg-gray-100 h-2 rounded-full overflow-hidden">
               <div className="bg-gradient-to-r from-orange-400 to-orange-600 h-full w-[85%] rounded-full"></div>
             </div>
-            <span className="text-xs text-gray-400 font-bold whitespace-nowrap uppercase tracking-widest">Đã bán 1,235+</span>
+            <span className="text-[10px] text-gray-400 font-black uppercase tracking-widest">Bestseller Ý</span>
           </div>
-
-          <div className="flex items-baseline gap-4">
-            <span className="text-5xl font-black text-gray-900 tracking-tighter">{currentSlide.price || '899.000đ'}</span>
-            {currentSlide.oldPrice && (
-              <span className="text-xl text-gray-300 line-through font-bold">{currentSlide.oldPrice}</span>
-            )}
-            <span className="bg-orange-100 text-orange-600 text-xs font-black px-3 py-1.5 rounded-lg uppercase">GIÁ TỐT</span>
+          <div className="flex items-baseline gap-5">
+            <span className="text-6xl font-black text-gray-900 tracking-tighter">{currentSlide.price}</span>
+            <span className="text-2xl text-gray-200 line-through font-bold">{currentSlide.oldPrice}</span>
           </div>
         </div>
 
         <div className="flex flex-col gap-4">
-          <button 
-            onClick={handleBuyNow}
-            className="w-full bg-orange-500 hover:bg-orange-600 text-white py-5 rounded-2xl font-black text-sm uppercase tracking-[0.2em] shadow-2xl shadow-orange-500/40 transition-all hover:-translate-y-1 active:translate-y-0"
-          >
-            MUA HÀNG NGAY
+          <button onClick={handleBuyNow} className="w-full bg-orange-500 hover:bg-orange-600 text-white py-6 rounded-[28px] font-black text-sm uppercase tracking-[0.3em] shadow-2xl transition-all">
+            MUA NGAY
           </button>
-          
-          <div className="flex gap-4">
-            <div className="flex-1 py-4 border-2 border-gray-100 rounded-2xl flex justify-center items-center">
-              <div className="flex items-center border-2 border-gray-200 rounded-xl px-4 py-1">
-                <span className="text-lg font-bold px-3 opacity-30 cursor-not-allowed">-</span>
-                <span className="text-lg font-black px-4">1</span>
-                <span className="text-lg font-bold px-3 opacity-30 cursor-not-allowed">+</span>
-              </div>
-            </div>
-            <button className="p-4 border-2 border-gray-100 rounded-2xl text-gray-300 hover:text-red-500 hover:border-red-100 transition-all">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-              </svg>
-            </button>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-2 gap-6 pt-10 border-t border-gray-100">
-           <div className="flex items-center gap-4 group">
-             <div className="w-12 h-12 bg-gray-50 rounded-2xl flex items-center justify-center text-orange-500 transition-colors group-hover:bg-orange-500 group-hover:text-white">
-               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
-               </svg>
-             </div>
-             <div>
-               <h5 className="font-black text-[10px] uppercase tracking-widest text-gray-900">FREESHIP</h5>
-               <p className="text-[10px] text-gray-400 font-bold uppercase">Toàn quốc từ 499k</p>
-             </div>
-           </div>
-           <div className="flex items-center gap-4 group">
-             <div className="w-12 h-12 bg-gray-50 rounded-2xl flex items-center justify-center text-orange-500 transition-colors group-hover:bg-orange-500 group-hover:text-white">
-               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-               </svg>
-             </div>
-             <div>
-               <h5 className="font-black text-[10px] uppercase tracking-widest text-gray-900">ĐỔI TRẢ</h5>
-               <p className="text-[10px] text-gray-400 font-bold uppercase">Trong vòng 7 ngày</p>
-             </div>
-           </div>
         </div>
       </div>
+      <style dangerouslySetInnerHTML={{ __html: `.scrollbar-hide::-webkit-scrollbar { display: none; } .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }`}} />
     </section>
   );
 };

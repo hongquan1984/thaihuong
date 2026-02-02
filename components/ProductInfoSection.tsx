@@ -6,19 +6,19 @@ interface ProductInfoSectionProps {
 }
 
 const ProductInfoSection: React.FC<ProductInfoSectionProps> = ({ data }) => {
-  const brandName = data?.hero_brand2 || 'GIOVENTÙ';
-  const specsImg = data?.specs_img || 'https://picsum.photos/seed/stickinfo/400/600';
+  const brandName = data?.hero_brand2 || 'ITALY HAIR RECOVERY';
+  const specsImg = data?.specs_img || 'https://images.unsplash.com/photo-1608248597279-f99d160bfcbc?auto=format&fit=crop&q=80&w=400';
   
   const defaultBenefits = [
-    "Sửa giúp da căng bóng, mềm mịn tức thì",
-    "Ngăn ngừa lão hóa da, tái tạo và nâng đỡ cấu trúc da",
-    "5 loại Ceramide làm trắng da, phục hồi sắc tố melanin",
-    "Cải thiện nếp nhăn khóe mắt và vết chân chim quanh mắt",
-    "100% thành phần thiên nhiên, hữu cơ",
-    "Collagen dạng thỏi tiện lợi, dễ dàng sử dụng",
-    "Đa chức năng: Sử dụng dưỡng da mặt - môi - mông",
-    "Độ pH = 5.5, dịu nhẹ phù hợp với mọi làn da da nhạy cảm, treatment",
-    "Sử dụng ngay cả trên nền makeup, giảm việc khô da, mốc lớp makeup, làm nền đẹp hơn"
+    "Công nghệ Keratin thủy phân giúp tái tạo biểu bì tóc ngay lập tức",
+    "Chiết xuất tinh dầu Argan và Silk Protein từ vùng Tuscany, Italia",
+    "Phục hồi tóc hư tổn nặng do uốn, nhuộm, tẩy nhiều lần",
+    "Khóa màu tóc nhuộm, giữ cho màu bền và rực rỡ hơn",
+    "Dưỡng ẩm sâu, loại bỏ tình trạng tóc chẻ ngọn và khô xơ",
+    "Tạo màng bảo vệ tóc khỏi tia UV và nhiệt độ từ máy sấy",
+    "Hương thơm nước hoa Ý sang trọng, lưu hương lên đến 48 giờ",
+    "Độ pH trung tính, an toàn tuyệt đối cho da đầu nhạy cảm",
+    "Kết cấu kem mịn, không gây bết dính hay nặng tóc"
   ];
 
   const benefits = data?.specs_benefits 
@@ -28,24 +28,22 @@ const ProductInfoSection: React.FC<ProductInfoSectionProps> = ({ data }) => {
   return (
     <section className="bg-gray-50 rounded-2xl p-8 lg:p-12 overflow-hidden relative">
       <div className="relative z-10 max-w-5xl mx-auto">
-        <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Thông tin sản phẩm</p>
-        <h3 className="text-2xl font-black text-orange-500 mb-8 uppercase">THỎI COLLAGEN TƯƠI ĐA CHỨC NĂNG {brandName}</h3>
+        <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Chi tiết sản phẩm</p>
+        <h3 className="text-2xl font-black text-orange-500 mb-8 uppercase">BỘ SẢN PHẨM PHỤC HỒI CAO CẤP {brandName}</h3>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-          {/* Left Visual Overlay */}
           <div className="lg:col-span-4 relative flex justify-center">
             <div className="bg-orange-400 w-full max-w-[280px] h-[400px] rounded-2xl absolute -bottom-10 -left-6 z-0 opacity-80"></div>
             <img 
               src={specsImg} 
-              alt="Collagen stick" 
+              alt="Hair product details" 
               className="relative z-10 w-full max-w-[280px] rounded-xl shadow-2xl border-4 border-white object-cover aspect-[2/3]"
             />
           </div>
 
-          {/* Right Text Content */}
           <div className="lg:col-span-8 space-y-8">
             <div>
-              <h4 className="text-lg font-bold text-gray-800 border-l-4 border-orange-500 pl-4 mb-4">ƯU ĐIỂM NỔI BẬT:</h4>
+              <h4 className="text-lg font-bold text-gray-800 border-l-4 border-orange-500 pl-4 mb-4">LỢI ÍCH VƯỢT TRỘI:</h4>
               <ul className="text-sm text-gray-600 space-y-2 list-disc pl-5">
                 {benefits.map((item: string, idx: number) => (
                   <li key={idx}>{item}</li>
@@ -54,19 +52,19 @@ const ProductInfoSection: React.FC<ProductInfoSectionProps> = ({ data }) => {
             </div>
 
             <div>
-              <h4 className="text-lg font-bold text-gray-800 border-l-4 border-orange-500 pl-4 mb-4">HƯỚNG DẪN SỬ DỤNG:</h4>
+              <h4 className="text-lg font-bold text-gray-800 border-l-4 border-orange-500 pl-4 mb-4">QUY TRÌNH CHUẨN SALON Ý:</h4>
               <ul className="text-sm text-gray-600 space-y-2">
-                <li>• Độ tuổi sử dụng: &gt; 6 tuổi</li>
-                <li>• Sau khi sử dụng toner vào buổi sáng. Sau khi rửa mặt vào buổi tối</li>
-                <li>• Thoa đều sản phẩm theo chiều đi lên</li>
-                <li>• Lưu ý: Thoa nhiều hơn lên vùng có nếp nhăn</li>
+                <li>• BƯỚC 1: Làm sạch tóc với dầu gội Collagen Hanmi</li>
+                <li>• BƯỚC 2: Thoa dầu xả Keratin, massage nhẹ nhàng trong 3-5 phút</li>
+                <li>• BƯỚC 3: Xả sạch và thấm khô bằng khăn bông</li>
+                <li>• BƯỚC 4: Thoa 2 giọt tinh dầu Silk Oil lên ngọn tóc để hoàn thiện độ bóng</li>
               </ul>
             </div>
             
             <div className="pt-8 border-t border-gray-200">
-               <h4 className="text-sm font-bold text-gray-800 mb-2">THÀNH PHẦN CÔNG BỐ:</h4>
-               <p className="text-[11px] text-gray-400 leading-relaxed italic">
-                 Silica Silylate, Octyldodecanol, Caprylic/Capric Triglyceride, Synthetic Wax, Polybutene, Microcrystalline Wax, Methyl Methacrylate, Glycerin, Crosspolymer, Dipropylene Glycol, Fragrance, Alpha-Isomethyl Ionone, Nước tinh khiết, Ethylene/Propylene Copolymer, Ethylhexylglycerin, Caprylyl Glycol, Hydrogenated Lecithin, Polyglyceryl-10 Oleate, Eclipta Prostrata Extract, Benzotriazolyl Dodecyl p-Cresol 0,25, Adenosine, Melia Azadirachta Leaf Extract, Simmondsia Chinensis (Jojoba) Seed Oil, Cetearyl Alcohol, Moringa Oleifera Seed Oil, Stearic Acid, Tocopheryl Acetate, Collagen Extract, Ceramide NP, Ceramide NS, Cholesterol, Phytosphingosine, Ceramide AP, Ceramide AS, Hyaluronic, Ceramide EOP, Linalool, Benzyl Benzoate, Hexyl Cinnamal, Limonene
+               <h4 className="text-sm font-bold text-gray-800 mb-2">NGUỒN GỐC & XUẤT XỨ:</h4>
+               <p className="text-[11px] text-gray-400 leading-relaxed italic uppercase tracking-widest">
+                 MANUFACTURED IN MILAN, ITALY | FORMULATED BY HANMI BIOTECH | EXCLUSIVE DISTRIBUTION BY HANMI VIETNAM
                </p>
             </div>
           </div>

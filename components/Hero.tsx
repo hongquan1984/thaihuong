@@ -9,16 +9,16 @@ const Hero: React.FC<HeroProps> = ({ data }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   
   const content = {
-    title: data?.hero_title || 'BẢO VỆ DA - NGĂN LÃO HÓA NHÉ CẢ NHÀ',
+    title: data?.hero_title || 'TINH HOA CHĂM SÓC TÓC CHUẨN SALON Ý',
     titleSize: data?.hero_title_size || '12px',
-    brand: data?.hero_brand || 'THÁI HƯƠNG COSMETIC',
-    brandSize: data?.hero_brand_size || '5rem', // Tương đương text-7xl mặc định
-    secondaryBrand: data?.hero_brand2 || 'COLAGEN SHAMPOO',
-    secondaryBrandSize: data?.hero_brand2_size || '4rem', // Tương đương text-6xl mặc định
-    description: data?.hero_desc || 'Giải pháp toàn diện giúp bảo vệ làn da khỏi tác hại của tia UV đồng thời cấp ẩm và ngăn ngừa lão hóa chuyên sâu từ Collagen tươi hữu cơ.',
-    price: data?.hero_price || '899.000đ',
-    oldPrice: data?.hero_old_price || '1.070.000đ',
-    img1: data?.hero_img1 || 'https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&q=80&w=800',
+    brand: data?.hero_brand || 'HANMI PROFESSIONAL',
+    brandSize: data?.hero_brand_size || '5rem',
+    secondaryBrand: data?.hero_brand2 || 'ITALY HAIR CARE',
+    secondaryBrandSize: data?.hero_brand2_size || '4rem',
+    description: data?.hero_desc || 'Giải pháp phục hồi tóc hư tổn chuyên sâu với công nghệ Collagen tươi và Keratin tinh khiết từ Italia. Mang lại mái tóc suôn mượt, óng ả ngay lần gội đầu tiên.',
+    price: data?.hero_price || '1.250.000đ',
+    oldPrice: data?.hero_old_price || '1.580.000đ',
+    img1: data?.hero_img1 || 'https://images.unsplash.com/photo-1527799822394-30a5c07e0c40?auto=format&fit=crop&q=80&w=800',
     videoUrl: data?.hero_video || 'https://player.vimeo.com/external/494252666.sd.mp4?s=72312154670233e466d79a29e7f539951684c30c&profile_id=164&oauth2_token_id=57447761',
   };
 
@@ -47,7 +47,7 @@ const Hero: React.FC<HeroProps> = ({ data }) => {
           </div>
           
           <div className="w-full space-y-2">
-            <p className="text-[11px] text-gray-400 font-bold uppercase tracking-[0.2em] ml-1">VỚI XỊT CHỐNG NẮNG</p>
+            <p className="text-[11px] text-gray-400 font-bold uppercase tracking-[0.2em] ml-1">CÔNG NGHỆ PHỤC HỒI TỪ Ý</p>
             
             <h1 
               className="font-black text-orange-500 leading-[0.9] tracking-tighter uppercase"
@@ -60,7 +60,7 @@ const Hero: React.FC<HeroProps> = ({ data }) => {
             <div className="flex items-center gap-4 py-4 w-full">
               <div className="h-[1px] flex-1 bg-gray-200"></div>
               <span className="text-[11px] font-bold text-gray-300 uppercase tracking-[0.2em] italic whitespace-nowrap">
-                Và thỏi collagen tươi
+                Premium Hair Solution
               </span>
               <div className="h-[1px] flex-1 bg-gray-200"></div>
             </div>
@@ -73,7 +73,7 @@ const Hero: React.FC<HeroProps> = ({ data }) => {
             </h2>
             
             <p className="text-[12px] font-black text-gray-400 uppercase tracking-[0.3em] pt-4">
-              ĐA CHỨC NĂNG
+              DẦU GỘI - XẢ - TINH DẦU - COLLAGEN
             </p>
           </div>
 
@@ -90,7 +90,7 @@ const Hero: React.FC<HeroProps> = ({ data }) => {
               </div>
               <div className="h-10 w-[1px] bg-gray-100 hidden sm:block"></div>
               <button className="bg-orange-500 hover:bg-orange-600 text-white px-10 py-4 rounded-[28px] font-black text-[12px] uppercase tracking-widest transition-all hover:shadow-xl hover:shadow-orange-500/30 active:scale-95">
-                ĐẶT MUA NGAY
+                MUA TRỌN BỘ
               </button>
             </div>
           </div>
@@ -114,8 +114,8 @@ const Hero: React.FC<HeroProps> = ({ data }) => {
             <div className="absolute bottom-10 left-8 right-8">
                <div className="bg-white/30 backdrop-blur-2xl p-6 rounded-[40px] border border-white/40 flex items-center justify-between shadow-2xl">
                   <div>
-                    <p className="text-[9px] font-black text-white/80 uppercase tracking-[0.2em] mb-1">Chuyên gia khuyên dùng</p>
-                    <h4 className="text-xl font-black text-white tracking-tight uppercase">KẾT CẤU MỎNG NHẸ</h4>
+                    <p className="text-[9px] font-black text-white/80 uppercase tracking-[0.2em] mb-1">Dành cho tóc hư tổn</p>
+                    <h4 className="text-xl font-black text-white tracking-tight uppercase">MỀM MƯỢT TỨC THÌ</h4>
                   </div>
                   <div className="w-14 h-14 bg-white rounded-3xl flex items-center justify-center text-orange-500 shadow-xl transition-transform hover:scale-110 cursor-pointer">
                     <svg className="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
@@ -127,7 +127,7 @@ const Hero: React.FC<HeroProps> = ({ data }) => {
           </div>
 
           <div className="absolute -top-12 -right-8 w-44 h-44 rounded-[45px] overflow-hidden shadow-2xl border-[6px] border-white z-20 hidden lg:block animate-float">
-             <img src={content.img1} className="w-full h-full object-cover" alt="Detail" />
+             <img src={content.img1} className="w-full h-full object-cover" alt="Hair Care" />
           </div>
 
           <div className="absolute -bottom-20 -left-20 w-80 h-80 bg-orange-300/20 rounded-full blur-[80px] z-0"></div>
