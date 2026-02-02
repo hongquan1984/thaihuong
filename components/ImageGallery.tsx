@@ -40,10 +40,10 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ data }) => {
   if (images.length === 0) return null;
 
   return (
-    <section className="py-20 animate-in fade-in duration-1000 overflow-hidden">
+    <section className="py-10 md:py-20 animate-in fade-in duration-1000 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 text-center">
-        <div className="relative inline-block mb-12">
-           <h3 className="font-script text-6xl text-[#e91e63] lowercase">Hình ảnh sản phẩm</h3>
+        <div className="relative inline-block mb-6 md:mb-12">
+           <h3 className="font-script text-5xl md:text-6xl text-[#e91e63] lowercase">Hình ảnh sản phẩm</h3>
            <div className="w-1/2 h-1 bg-[#e91e63] mx-auto mt-2 rounded-full opacity-30"></div>
         </div>
 
@@ -51,10 +51,10 @@ const ImageGallery: React.FC<ImageGalleryProps> = ({ data }) => {
           ref={scrollRef}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
-          className="flex gap-6 overflow-x-auto scrollbar-hide py-10 px-4"
+          className="flex gap-4 md:gap-6 overflow-x-auto scrollbar-hide py-6 md:py-10 px-4"
         >
           {[...images, ...images].map((img, idx) => (
-            <div key={idx} className="min-w-[280px] md:min-w-[350px] aspect-[4/5] rounded-[40px] overflow-hidden shadow-2xl border-4 border-white transition-transform duration-500 hover:scale-105">
+            <div key={idx} className="min-w-[240px] md:min-w-[350px] aspect-[4/5] rounded-[30px] md:rounded-[40px] overflow-hidden shadow-2xl border-4 border-white transition-transform duration-500 hover:scale-105">
                <img src={img} alt={`Gallery ${idx}`} className="w-full h-full object-cover" />
             </div>
           ))}

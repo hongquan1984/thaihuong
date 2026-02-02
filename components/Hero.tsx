@@ -21,7 +21,7 @@ const Hero: React.FC<HeroProps> = ({ data }) => {
   }, [content.videoUrl]);
 
   return (
-    <section className="relative w-full bg-white overflow-hidden py-20 px-6">
+    <section className="relative w-full bg-white overflow-hidden py-10 md:py-20 px-6">
       {/* Decorative background sketches */}
       <div className="absolute top-10 left-10 w-40 h-40 opacity-[0.05] pointer-events-none rotate-[-15deg]">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" className="w-full h-full text-gray-900"><path strokeWidth={0.5} d="M12 2l2 4 4 2-4 2-2 4-2-4-4-2 4-2zM4 20l2-2 2 2-2 2zm16-4l2-2 2 2-2 2z" /></svg>
@@ -33,25 +33,25 @@ const Hero: React.FC<HeroProps> = ({ data }) => {
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
         
         {/* Left Content */}
-        <div className="flex flex-col items-start space-y-6 lg:pr-10 relative z-10">
-          <div className="relative">
+        <div className="flex flex-col items-start space-y-6 lg:pr-10 relative z-10 text-center lg:text-left">
+          <div className="relative mx-auto lg:mx-0">
              <div className="absolute -top-4 -left-6 w-72 h-32 bg-pink-100/50 rounded-full blur-2xl -z-10 rotate-[-5deg]"></div>
-             <h2 className="font-script text-[clamp(3.5rem,8vw,6rem)] text-[#e91e63] leading-none mb-4">
+             <h2 className="font-script text-[clamp(3rem,10vw,6rem)] text-[#e91e63] leading-none mb-4">
                {content.scriptTitle}
              </h2>
           </div>
           
-          <p className="text-gray-500 text-lg leading-relaxed max-w-md font-medium">
+          <p className="text-gray-500 text-base md:text-lg leading-relaxed max-w-md font-medium mx-auto lg:mx-0">
             {content.description}
           </p>
 
-          <button className="bg-[#e91e63] text-white px-10 py-4 rounded-full font-black text-xs uppercase tracking-[0.2em] transition-all hover:bg-black hover:shadow-2xl active:scale-95 shadow-lg shadow-pink-200">
+          <button className="bg-[#e91e63] text-white px-10 py-4 rounded-full font-black text-xs uppercase tracking-[0.2em] transition-all hover:bg-black hover:shadow-2xl active:scale-95 shadow-lg shadow-pink-200 mx-auto lg:mx-0">
             MUA NGAY
           </button>
         </div>
 
         {/* Right Media (Video) */}
-        <div className="relative">
+        <div className="relative mt-10 lg:mt-0">
           <div className="relative z-10 w-full aspect-[4/3] lg:aspect-[5/4] rounded-[20px] overflow-hidden shadow-2xl border-4 border-white bg-gray-50">
             <video 
               ref={videoRef}
