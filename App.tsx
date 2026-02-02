@@ -80,7 +80,7 @@ const App: React.FC = () => {
   const generateSqlScript = () => {
     const keys = [
       'hero_title', 'hero_brand', 'hero_brand2', 'hero_price', 'hero_old_price', 
-      'hero_img1', 'hero_img2', 'prod_name', 'specs_img', 'specs_benefits', 'footer_info', 'footer_contact', 'home_slides'
+      'hero_img1', 'hero_img2', 'hero_video', 'prod_name', 'specs_img', 'specs_benefits', 'footer_info', 'footer_contact', 'home_slides'
     ];
     
     const defaultSlides = [
@@ -95,12 +95,13 @@ const App: React.FC = () => {
 
     const defaultValues: any = {
       hero_title: 'BẢO VỆ DA - NGĂN LÃO HÓA',
-      hero_brand: 'WIICARE',
-      hero_brand2: 'GIOVENTÙ',
+      hero_brand: 'THÁI HƯƠNG COSMETIC',
+      hero_brand2: 'COLAGEN SHAMPOO',
       hero_price: '899.000đ',
       hero_old_price: '1.070.000đ',
       hero_img1: 'https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&q=80&w=800',
       hero_img2: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=800',
+      hero_video: 'https://player.vimeo.com/external/494252666.sd.mp4?s=72312154670233e466d79a29e7f539951684c30c&profile_id=164&oauth2_token_id=57447761',
       prod_name: 'BỘ ĐÔI BẢO VỆ DA - NGĂN LÃO HÓA',
       specs_img: 'https://images.unsplash.com/photo-1556229010-6c3f2c9ca5f8?auto=format&fit=crop&q=80&w=600',
       specs_benefits: 'Sửa giúp da căng bóng, mềm mịn tức thì\nNgăn ngừa lão hóa da\nCeramide làm trắng da',
