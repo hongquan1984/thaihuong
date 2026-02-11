@@ -24,16 +24,16 @@ const FeatureSlider: React.FC<FeatureSliderProps> = ({ data }) => {
       title: 'dầu cặp top haneda',
       subtitle: 'mô tả ngắn cho slide này',
       tag: 'DẦU CẶP TOP HANEDA',
-      price: '1000',
-      oldPrice: '1200'
+      price: '1.000.000đ',
+      oldPrice: '1.200.000đ'
     },
     {
       image: 'https://images.unsplash.com/photo-1526947425960-945c6e72858f?auto=format&fit=crop&q=80&w=1200',
       title: 'tinh chất keratin italy',
       subtitle: 'dưỡng tóc siêu mềm mượt chuyên sâu',
       tag: 'KERATIN ESSENCE',
-      price: '850',
-      oldPrice: '990'
+      price: '850.000đ',
+      oldPrice: '990.000đ'
     }
   ];
 
@@ -45,13 +45,17 @@ const FeatureSlider: React.FC<FeatureSliderProps> = ({ data }) => {
         {/* Main Image & Thumbnails */}
         <div className="lg:col-span-7 space-y-6">
           <div className="relative group w-full">
-            <div className="relative overflow-hidden rounded-[40px] md:rounded-[60px] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.08)] bg-gray-50 border-[6px] md:border-[10px] border-white aspect-square md:aspect-auto md:h-[600px]">
+            {/* Image Container with Fixed Height and Contain Logic */}
+            <div className="relative overflow-hidden rounded-[40px] md:rounded-[60px] shadow-[0_30px_60px_-15px_rgba(0,0,0,0.08)] bg-gray-50 border-[6px] md:border-[10px] border-white h-[450px] md:h-[650px] flex items-center justify-center p-6 md:p-12">
               <img 
                 key={activeIndex} 
                 src={currentSlide.image} 
-                className="w-full h-full object-cover animate-in fade-in zoom-in duration-700" 
+                className="max-w-full max-h-full object-contain animate-in fade-in zoom-in duration-700" 
                 alt={currentSlide.title}
               />
+              
+              {/* Subtle background glow to make product pop when contained */}
+              <div className="absolute inset-0 bg-gradient-to-tr from-pink-50/30 to-transparent -z-10"></div>
             </div>
             
             <div className="absolute -bottom-2 -right-2 md:-bottom-4 md:-right-4 z-20">
@@ -66,9 +70,9 @@ const FeatureSlider: React.FC<FeatureSliderProps> = ({ data }) => {
               <button 
                 key={i} 
                 onClick={() => setActiveIndex(i)} 
-                className={`relative min-w-[64px] h-16 md:min-w-[80px] md:h-20 rounded-2xl overflow-hidden border-2 transition-all duration-300 ${activeIndex === i ? 'border-[#e91e63] scale-105 shadow-xl' : 'border-gray-100 opacity-60'}`}
+                className={`relative min-w-[70px] h-20 md:min-w-[100px] md:h-28 rounded-2xl overflow-hidden border-2 transition-all duration-300 bg-white flex items-center justify-center p-2 ${activeIndex === i ? 'border-[#e91e63] scale-105 shadow-xl' : 'border-gray-100 opacity-60'}`}
               >
-                <img src={slide.image} className="w-full h-full object-cover" alt="Thumbnail" />
+                <img src={slide.image} className="max-w-full max-h-full object-contain" alt="Thumbnail" />
               </button>
             ))}
           </div>
