@@ -72,7 +72,7 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-white text-gray-900">
-      <Header />
+      <Header data={content} />
       <main>
         <Hero data={content} />
         <div className="max-w-6xl mx-auto px-6 sm:px-6 lg:px-8 py-4 md:py-12 space-y-12 md:space-y-24">
@@ -83,7 +83,7 @@ const App: React.FC = () => {
           <PartnerForm />
         </div>
       </main>
-      <Footer />
+      <Footer data={content} />
       <button onClick={() => setIsAdminMode(true)} className="fixed bottom-4 left-4 opacity-5 hover:opacity-100 bg-black text-white text-[8px] px-2 py-1 rounded transition-all z-[100]">DASHBOARD</button>
     </div>
   );

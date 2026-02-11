@@ -221,6 +221,7 @@ CREATE POLICY "Allow public modify" ON public.site_content FOR ALL USING (true) 
         <nav className="space-y-2 flex-1">
           {[
             { id: 'hero', label: 'Bố cục Hero', icon: '🏠' },
+            { id: 'company', label: 'Thông tin công ty', icon: '🏢' },
             { id: 'slides', label: 'Quản lý Slide', icon: '🖼️' },
             { id: 'gallery', label: 'Thư viện ảnh', icon: '📷' },
             { id: 'testimonials', label: 'Phản hồi khách', icon: '💬' },
@@ -238,7 +239,7 @@ CREATE POLICY "Allow public modify" ON public.site_content FOR ALL USING (true) 
       <main className="flex-1 overflow-y-auto p-12 relative">
         <header className="flex justify-between items-end mb-10">
           <div>
-            <h1 className="text-4xl font-black uppercase italic tracking-tighter">CHỈNH SỬA {activeTab}</h1>
+            <h1 className="text-4xl font-black uppercase italic tracking-tighter">CHỈNH SỬA {activeTab === 'company' ? 'CÔNG TY' : activeTab.toUpperCase()}</h1>
             <p className="text-gray-400 text-xs font-bold uppercase mt-2">Đồng bộ trực tiếp lên hệ thống</p>
           </div>
           {activeTab !== 'database' && (
@@ -267,6 +268,52 @@ CREATE POLICY "Allow public modify" ON public.site_content FOR ALL USING (true) 
                 </button>
               </div>
               <div className="text-gray-400 text-[10px] uppercase font-bold text-center">Sau khi chạy mã trên Supabase, hãy quay lại các tab khác và nhấn Lưu.</div>
+            </div>
+          )}
+
+          {activeTab === 'company' && (
+            <div className="grid grid-cols-2 gap-12">
+              <div className="space-y-6">
+                <div>
+                  <label className="text-[10px] font-black uppercase text-gray-400 block mb-2">Tên công ty / Thương hiệu</label>
+                  <input className="w-full p-4 bg-gray-50 rounded-2xl border border-gray-100 font-black text-gray-800" value={formData.company_name || ''} onChange={(e) => handleChange('company_name', e.target.value)} placeholder="VD: THÁI HƯƠNG" />
+                </div>
+                <div>
+                  <label className="text-[10px] font-black uppercase text-gray-400 block mb-2">Slogan</label>
+                  <input className="w-full p-4 bg-gray-50 rounded-2xl border border-gray-100 font-bold" value={formData.company_slogan || ''} onChange={(e) => handleChange('company_slogan', e.target.value)} placeholder="VD: Làm đẹp & Mỹ phẩm" />
+                </div>
+                <div>
+                  <label className="text-[10px] font-black uppercase text-gray-400 block mb-2">Hotline hỗ trợ</label>
+                  <input className="w-full p-4 bg-gray-50 rounded-2xl border border-gray-100 font-black text-orange-500" value={formData.company_hotline || ''} onChange={(e) => handleChange('company_hotline', e.target.value)} placeholder="VD: +84 123 456 789" />
+                </div>
+                <div>
+                  <label className="text-[10px] font-black uppercase text-gray-400 block mb-2">Email liên hệ</label>
+                  <input className="w-full p-4 bg-gray-50 rounded-2xl border border-gray-100" value={formData.company_email || ''} onChange={(e) => handleChange('company_email', e.target.value)} placeholder="VD: contact@thaihuong.vn" />
+                </div>
+              </div>
+              <div className="space-y-6">
+                <div>
+                   <label className="text-[10px] font-black uppercase text-gray-400 block mb-2">Logo công ty</label>
+                   <div className="p-4 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200 flex items-center gap-4">
+                     <img src={formData.company_logo || ''} className="w-20 h-20 object-contain rounded-xl bg-white p-2" />
+                     <label className="cursor-pointer font-bold text-xs text-orange-500">Thay đổi logo<input type="file" className="hidden" onChange={(e) => handleGenericFileUpload(e, url => handleChange('company_logo', url))} /></label>
+                   </div>
+                </div>
+                <div>
+                  <label className="text-[10px] font-black uppercase text-gray-400 block mb-2">Địa chỉ trụ sở / Giới thiệu ngắn</label>
+                  <textarea className="w-full p-4 bg-gray-50 rounded-2xl border border-gray-100 h-32" value={formData.company_address || ''} onChange={(e) => handleChange('company_address', e.target.value)} placeholder="Địa chỉ hiển thị dưới chân trang..." />
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="text-[10px] font-black uppercase text-gray-400 block mb-2">Link Facebook</label>
+                    <input className="w-full p-4 bg-gray-50 rounded-2xl border border-gray-100 text-xs" value={formData.company_facebook || ''} onChange={(e) => handleChange('company_facebook', e.target.value)} placeholder="https://facebook.com/..." />
+                  </div>
+                  <div>
+                    <label className="text-[10px] font-black uppercase text-gray-400 block mb-2">Link Zalo / Chat</label>
+                    <input className="w-full p-4 bg-gray-50 rounded-2xl border border-gray-100 text-xs" value={formData.company_zalo || ''} onChange={(e) => handleChange('company_zalo', e.target.value)} placeholder="https://zalo.me/..." />
+                  </div>
+                </div>
+              </div>
             </div>
           )}
 

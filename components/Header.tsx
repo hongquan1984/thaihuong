@@ -1,8 +1,13 @@
 
 import React from 'react';
 
-const Header: React.FC = () => {
-  const logoUrl = 'https://down-bs-vn.img.susercontent.com/vn-11134216-820l4-mf3qz730cj6565_tn.webp';
+interface HeaderProps {
+  data?: any;
+}
+
+const Header: React.FC<HeaderProps> = ({ data }) => {
+  const logoUrl = data?.company_logo || 'https://down-bs-vn.img.susercontent.com/vn-11134216-820l4-mf3qz730cj6565_tn.webp';
+  const hotline = data?.company_hotline || '+84 123 456 789';
 
   return (
     <div className="w-full">
@@ -28,7 +33,7 @@ const Header: React.FC = () => {
             </div>
             <div className="flex flex-col">
               <span className="text-[10px] font-bold uppercase text-gray-400 leading-none mb-1">Hỗ trợ khách hàng</span>
-              <span className="text-sm font-black tracking-tighter">+84 123 456 789</span>
+              <span className="text-sm font-black tracking-tighter">{hotline}</span>
             </div>
           </div>
 
@@ -38,8 +43,8 @@ const Header: React.FC = () => {
                <img src={logoUrl} alt="Logo" className="h-full object-contain" />
             </div>
             <div className="text-center">
-               <h1 className="text-2xl font-black italic tracking-tighter text-gray-900 leading-none">THÁI HƯƠNG</h1>
-               <p className="text-[8px] font-black uppercase tracking-[0.4em] text-gray-400 mt-1">Làm đẹp & Mỹ phẩm</p>
+               <h1 className="text-2xl font-black italic tracking-tighter text-gray-900 leading-none uppercase">{data?.company_name || 'THÁI HƯƠNG'}</h1>
+               <p className="text-[8px] font-black uppercase tracking-[0.4em] text-gray-400 mt-1">{data?.company_slogan || 'Làm đẹp & Mỹ phẩm'}</p>
             </div>
           </div>
 
