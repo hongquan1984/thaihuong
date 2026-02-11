@@ -117,7 +117,15 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onExit }) => {
   };
 
   const addSlide = () => {
-    const newSlide: SlideItem = { image: 'https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d', title: 'Sản phẩm mới', subtitle: 'Mô tả ngắn', tag: 'TAG', price: '0đ', oldPrice: '0đ' };
+    const newSlide: SlideItem = { 
+      image: 'https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d', 
+      title: 'TIÊU ĐỀ SLIDE MỚI', 
+      subtitle: 'TÊN SẢN PHẨM', 
+      tag: 'DANH MỤC', 
+      price: '0đ', 
+      oldPrice: '0đ',
+      buyLink: '#' 
+    };
     const updated = [...slides, newSlide];
     setSlides(updated);
     handleChange('home_slides', JSON.stringify(updated));
@@ -311,9 +319,13 @@ CREATE POLICY "Allow public modify" ON public.site_content FOR ALL USING (true) 
                         <input className="w-full p-3 bg-white border border-gray-100 rounded-xl text-[10px]" value={slide.tag} onChange={(e) => updateSlide(idx, 'tag', e.target.value)} placeholder="Nhãn" />
                       </div>
                     </div>
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-2 gap-4 mb-4">
                       <input className="w-full p-3 bg-white border border-gray-100 rounded-xl font-bold text-sm" value={slide.price} onChange={(e) => updateSlide(idx, 'price', e.target.value)} placeholder="Giá KM" />
                       <input className="w-full p-3 bg-white border border-gray-100 rounded-xl text-gray-400 text-sm" value={slide.oldPrice} onChange={(e) => updateSlide(idx, 'oldPrice', e.target.value)} placeholder="Giá gốc" />
+                    </div>
+                    <div className="space-y-2">
+                       <label className="text-[10px] font-black uppercase text-gray-400 ml-2">Link đặt hàng (TikTok/Shopee)</label>
+                       <input className="w-full p-3 bg-white border border-gray-100 rounded-xl text-xs text-blue-500 font-medium" value={slide.buyLink || ''} onChange={(e) => updateSlide(idx, 'buyLink', e.target.value)} placeholder="Dán link tại đây..." />
                     </div>
                   </div>
                 ))}

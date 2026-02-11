@@ -25,7 +25,8 @@ const FeatureSlider: React.FC<FeatureSliderProps> = ({ data }) => {
       subtitle: 'mô tả ngắn cho slide này',
       tag: 'DẦU CẶP TOP HANEDA',
       price: '1.000.000đ',
-      oldPrice: '1.200.000đ'
+      oldPrice: '1.200.000đ',
+      buyLink: '#'
     },
     {
       image: 'https://images.unsplash.com/photo-1526947425960-945c6e72858f?auto=format&fit=crop&q=80&w=1200',
@@ -33,11 +34,26 @@ const FeatureSlider: React.FC<FeatureSliderProps> = ({ data }) => {
       subtitle: 'dưỡng tóc siêu mềm mượt chuyên sâu',
       tag: 'KERATIN ESSENCE',
       price: '850.000đ',
-      oldPrice: '990.000đ'
+      oldPrice: '990.000đ',
+      buyLink: '#'
     }
   ];
 
   const currentSlide = slides[activeIndex] || slides[0];
+
+  const handleOrderClick = () => {
+    if (currentSlide.buyLink && currentSlide.buyLink !== '#') {
+      window.open(currentSlide.buyLink, '_blank');
+    } else {
+      // Cuộn xuống form đăng ký nếu không có link
+      const form = document.getElementById('partner-form');
+      if (form) {
+        form.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        alert("Sản phẩm này hiện đang cập nhật link đặt hàng. Vui lòng liên hệ hotline!");
+      }
+    }
+  };
 
   return (
     <section className="py-4 md:py-12">
@@ -115,7 +131,10 @@ const FeatureSlider: React.FC<FeatureSliderProps> = ({ data }) => {
                </div>
             </div>
 
-            <button className="w-full bg-[#e91e63] hover:bg-black text-white py-5 md:py-6 rounded-2xl md:rounded-[30px] font-black text-xs md:text-sm uppercase tracking-[0.25em] transition-all duration-300 shadow-xl shadow-pink-200 active:scale-95">
+            <button 
+              onClick={handleOrderClick}
+              className="w-full bg-[#e91e63] hover:bg-black text-white py-5 md:py-6 rounded-2xl md:rounded-[30px] font-black text-xs md:text-sm uppercase tracking-[0.25em] transition-all duration-300 shadow-xl shadow-pink-200 active:scale-95"
+            >
               Đặt hàng ngay
             </button>
           </div>
