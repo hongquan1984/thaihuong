@@ -114,12 +114,9 @@ const RelatedProducts: React.FC<RelatedProductsProps> = ({ data }) => {
             <div className="flex gap-2 w-full mt-auto mb-6">
                <button 
                 onClick={() => p.buyLink && window.open(p.buyLink, '_blank')}
-                className="flex-1 bg-white border-2 border-[#e91e63] text-[#e91e63] hover:bg-pink-50 py-3 rounded-[20px] text-[10px] font-black uppercase tracking-widest transition-all"
+                className="w-full bg-[#e91e63] text-white hover:bg-black py-3 rounded-[20px] text-[10px] font-black uppercase tracking-widest transition-all shadow-lg shadow-pink-500/20"
                >
                  Mua ngay
-               </button>
-               <button className="flex-1 bg-[#e91e63] text-white hover:bg-black py-3 rounded-[20px] text-[10px] font-black uppercase tracking-widest transition-all shadow-lg shadow-pink-500/20">
-                 Thêm vào giỏ
                </button>
             </div>
             

@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 
 // Define props interface to fix TypeScript error
 interface ProductMainProps {
@@ -7,13 +7,20 @@ interface ProductMainProps {
 }
 
 const ProductMain: React.FC<ProductMainProps> = ({ data }) => {
-  const [quantity, setQuantity] = useState(1);
   const images = [
     'https://picsum.photos/seed/prod1/600/600',
     'https://picsum.photos/seed/prod2/600/600',
     'https://picsum.photos/seed/prod3/600/600',
     'https://picsum.photos/seed/prod4/600/600',
   ];
+
+  const handleOrderNow = () => {
+    // Scroll to contact form as there's no cart system
+    const form = document.getElementById('partner-form');
+    if (form) {
+      form.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
     <section className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start py-12">
@@ -59,21 +66,12 @@ const ProductMain: React.FC<ProductMainProps> = ({ data }) => {
         </div>
 
         <div className="flex flex-wrap items-center gap-4">
-          <button className="flex-1 bg-[#e91e63] hover:bg-black text-white py-5 rounded-[25px] font-black text-xs uppercase tracking-[0.2em] shadow-xl shadow-pink-100 transition-all active:scale-[0.98]">
-            THÊM VÀO GIỎ
+          <button 
+            onClick={handleOrderNow}
+            className="w-full bg-[#e91e63] hover:bg-black text-white py-5 rounded-[25px] font-black text-xs uppercase tracking-[0.2em] shadow-xl shadow-pink-100 transition-all active:scale-[0.98]"
+          >
+            ĐẶT HÀNG NGAY
           </button>
-          
-          <button className="p-5 border border-gray-100 rounded-[25px] text-gray-300 hover:text-[#e91e63] hover:border-pink-200 transition-colors shadow-sm bg-white">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-            </svg>
-          </button>
-
-          <div className="flex items-center border border-gray-100 rounded-[25px] bg-white px-2">
-            <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="px-5 py-4 text-gray-400 font-bold hover:text-[#e91e63] transition-colors">-</button>
-            <span className="px-2 font-black text-gray-800 w-8 text-center">{quantity}</span>
-            <button onClick={() => setQuantity(quantity + 1)} className="px-5 py-4 text-gray-400 font-bold hover:text-[#e91e63] transition-colors">+</button>
-          </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 py-8 border-t border-gray-50">
