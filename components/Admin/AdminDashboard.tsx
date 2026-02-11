@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { supabase, uploadFile } from '../../lib/supabase';
 
@@ -83,7 +82,8 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onExit }) => {
       const url = await uploadFile(file);
       callback(url);
     } catch (err: any) {
-      alert(`Lỗi tải tệp: ${err.message}`);
+      console.error("File upload error:", err);
+      alert(`Không thể tải ảnh: ${err.message || 'Vui lòng kiểm tra lại kết nối.'}`);
     } finally {
       setSaving(false);
     }
@@ -91,11 +91,21 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onExit }) => {
 
   // Quản lý Gallery
   const addGalleryImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    await handleGenericFileUpload(e, (url) => {
-      const updated = [...galleryImages, url];
+    // Added explicit type casting 'as File[]' to fix 'unknown' argument error on line 100
+    const files = Array.from(e.target.files || []) as File[];
+    if (files.length === 0) return;
+
+    setSaving(true);
+    try {
+      const newUrls = await Promise.all(files.map(file => uploadFile(file)));
+      const updated = [...galleryImages, ...newUrls];
       setGalleryImages(updated);
       handleChange('gallery_images', JSON.stringify(updated));
-    });
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setSaving(false);
+    }
   };
 
   const removeGalleryImage = (index: number) => {
@@ -169,9 +179,9 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onExit }) => {
       }));
       const { error } = await supabase.from('site_content').upsert(updates);
       if (error) throw error;
-      alert("Đã lưu thành công!");
+      alert("Đã xuất bản thành công!");
     } catch (err: any) {
-      alert("Lỗi khi lưu: " + err.message);
+      alert("Lỗi khi lưu dữ liệu: " + err.message);
     } finally {
       setSaving(false);
     }
@@ -361,7 +371,7 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({ onExit }) => {
                     <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" /></svg>
                   </div>
                   <span className="font-black text-sm uppercase tracking-widest block">Tải ảnh lên thư viện</span>
-                  <span className="text-[10px] text-gray-400 uppercase tracking-widest mt-1">Ảnh sẽ tự động chạy ở phần thư viện cuối trang</span>
+                  <span className="text-[10px] text-gray-400 uppercase tracking-widest mt-1">Chọn một hoặc nhiều ảnh cùng lúc</span>
                   <input type="file" className="hidden" multiple onChange={addGalleryImage} />
                 </label>
               </div>
